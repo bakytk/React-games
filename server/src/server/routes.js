@@ -20,9 +20,8 @@ router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
 
-router.post("/maze", confirmToken, controllers.createMaze);
-router.get("/maze/:mazeId/solution", confirmToken, controllers.getSolution);
-router.get("/maze", confirmToken, controllers.getMaze);
+// router.post("/loadJson", confirmToken, controllers.createMaze);
+// router.get("/turnReel", confirmToken, controllers.getMaze);
 
 router.all("/*", controllers.fallback);
 router.use((error, _, res, __) => {

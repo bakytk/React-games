@@ -1,56 +1,22 @@
-export const Maze = mongoose => {
-  var mazeSchema = mongoose.Schema({
-    mazeId: {
+export const Game = mongoose => {
+  var gameSchema = mongoose.Schema({
+    gameId: {
       type: String,
       required: true,
       unique: true
     },
-    gridSize: {
-      type: [
-        {
-          type: Number
-        }
-      ],
-      required: true,
-      validate: {
-        validator: function(input) {
-          return input.length === 2;
-        },
-        message: "gridSize is 2-number array"
-      }
+    input: {
+      type: Number
     },
-    walls: {
-      type: [
-        {
-          type: String
-        }
-      ],
-      required: true
+    result: {
+      type: Number
     },
-    entrance: {
-      type: String,
-      required: true
-    },
-    min: {
-      type: [
-        {
-          type: String
-        }
-      ]
-    },
-    max: {
-      type: [
-        {
-          type: String
-        }
-      ]
-    },
-    ownerId: {
+    userId: {
       type: String,
       required: true
     }
   });
-  return mongoose.model("Maze", mazeSchema);
+  return mongoose.model("Game", gameSchema);
 };
 
 //add constraint that role is either "buyer" or "seller"
@@ -69,6 +35,17 @@ export const User = mongoose => {
     password: {
       type: String,
       required: true
+    },
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    },
+    balance: {
+      type: Number,
+      required: true,
+      default: 0
     }
   });
   return mongoose.model("User", userSchema);
