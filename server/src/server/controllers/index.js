@@ -3,6 +3,7 @@ const { JWT_SECRET } = process.env;
 import jwt from "jsonwebtoken";
 import { uuid } from "uuidv4";
 import db from "../../db/index.js";
+import { promises as fs } from "fs";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env");
@@ -102,6 +103,21 @@ export const controllers = {
     } catch (e) {
       console.log("signin error", e);
       res.send(`Signin error: ${e.message}`);
+    }
+  },
+
+  initData: async (req, res) => {
+    try {
+      let { userId } = req.decode;
+      if (!userId) {
+        throw new Error("'userId' not validated");
+      }
+      let fileString = await fs.readFile("./src/db/game-data.json", "utf-8");
+      const json = JSON.parse(fileString);
+      res.json({ data: json });
+    } catch (e) {
+      console.error(e);
+      res.send(`loadData error: ${e.message}`);
     }
   }
 

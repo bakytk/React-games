@@ -20,7 +20,7 @@ router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
 
-// router.post("/loadJson", confirmToken, controllers.createMaze);
+router.post("/loadGames", confirmToken, controllers.initData);
 // router.get("/turnReel", confirmToken, controllers.getMaze);
 
 router.all("/*", controllers.fallback);
