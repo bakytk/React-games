@@ -1,10 +1,10 @@
 FROM node:14-alpine
 
-ADD . /max-min
-WORKDIR /max-min
+ADD . /reel-game
+WORKDIR /reel-game
 
-COPY package*.json ./max-min/
-COPY nodemon.json ./max-min/
+COPY package*.json ./reel-game/
+COPY nodemon.json ./reel-game/
 RUN npm install
 
 EXPOSE 15500

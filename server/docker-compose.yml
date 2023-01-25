@@ -1,7 +1,7 @@
 version: "3.2"
 services:
 
-  max_min:
+  reel_game:
     restart: unless-stopped
     env_file: .env
     build:
@@ -12,16 +12,16 @@ services:
         target: 15500
     environment:
       - JWT_SECRET=$JWT_SECRET
-      - DB_HOST=mongo_max_min
+      - DB_HOST=mongo_reel
       - DB_NAME=$DB_NAME
       - DB_PORT=$DB_PORT
       - DB_USER=$DB_USER
       - DB_PWD=$DB_PWD
       - DOCKER_ENV=true
     depends_on:
-      - mongo_max_min
+      - mongo_reel
 
-  mongo_max_min:
+  mongo_reel:
     image: mongo
     restart: unless-stopped
     env_file: .env

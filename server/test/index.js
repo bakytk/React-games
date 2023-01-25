@@ -9,7 +9,6 @@ chai.use(chaiHttp);
 
 const agent = chai.request.agent(server);
 let ACCESS_TOKEN = "";
-let MAZE_ID = "";
 
 before(function(done) {
   agent
@@ -28,60 +27,31 @@ before(function(done) {
     });
 });
 
-describe("max-min path", function() {
-  it("CREATE maze", function(done) {
+describe("slot machine", function() {
+  it("deposit", function(done) {
     agent
-      .post("/maze")
+      .post("/deposit")
       .set("authorization", `Bearer ${ACCESS_TOKEN}`)
       .send({
-        entrance: "A1",
-        gridSize: "8x8",
-        walls: [
-          "C1",
-          "G1",
-          "A2",
-          "C2",
-          "E2",
-          "G2",
-          "C3",
-          "E3",
-          "B4",
-          "C4",
-          "E4",
-          "F4",
-          "G4",
-          "B5",
-          "E5",
-          "B6",
-          "D6",
-          "E6",
-          "G6",
-          "H6",
-          "B7",
-          "D7",
-          "G7",
-          "B8"
-        ]
+        coin: 20
       })
       .end(function(err, res) {
-        //console.log("createMaze response", res.body.data);
-        MAZE_ID = res.body.data.mazeId;
+        //console.log("deposit response", res.body);
         res.should.have.status(200);
         done();
       });
-  });
-
-  it("GET solution", function(done) {
-    agent
-      .get(`/maze/${MAZE_ID}/solution?steps=min`)
-      .set("authorization", `Bearer ${ACCESS_TOKEN}`)
-      .send()
-      .end(function(err, res) {
-        //console.log("getSolution response", res.body.path);
-        res.body.path.length.should.eq(10);
-        done();
-      });
-  });
+  }),
+    it("spin", function(done) {
+      agent
+        .post("/spin")
+        .set("authorization", `Bearer ${ACCESS_TOKEN}`)
+        .send({})
+        .end(function(err, res) {
+          //console.log("spin response", res.body);
+          res.should.have.status(200);
+          done();
+        });
+    });
 });
 
 after(function() {

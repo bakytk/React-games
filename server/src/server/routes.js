@@ -22,7 +22,7 @@ router.post("/login", controllers.signin);
 
 router.post("/loadGames", confirmToken, controllers.loadGames);
 router.post("/deposit", confirmToken, controllers.deposit);
-router.get("/spin", confirmToken, controllers.spin);
+router.post("/spin", confirmToken, controllers.spin);
 
 router.all("/*", controllers.fallback);
 router.use((error, _, res, __) => {

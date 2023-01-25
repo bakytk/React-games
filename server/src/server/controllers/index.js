@@ -41,7 +41,7 @@ export const controllers = {
   signup: async (req, res) => {
     try {
       let { firstName, lastName, username, password } = req.body;
-      console.log("req.body", req.body);
+      //console.log("req.body", req.body);
       if (!(username && password)) {
         throw new Error("Username or password absent!");
       }
