@@ -1,14 +1,16 @@
-export const Game = mongoose => {
-  var gameSchema = mongoose.Schema({
-    gameId: {
+export const Spin = mongoose => {
+  var spinSchema = mongoose.Schema({
+    spinId: {
       type: String,
       required: true,
       unique: true
     },
-    input: {
-      type: Number
-    },
-    result: {
+    reels: [
+      {
+        type: String
+      }
+    ],
+    reward: {
       type: Number
     },
     userId: {
@@ -16,7 +18,7 @@ export const Game = mongoose => {
       required: true
     }
   });
-  return mongoose.model("Game", gameSchema);
+  return mongoose.model("Spin", spinSchema);
 };
 
 //add constraint that role is either "buyer" or "seller"

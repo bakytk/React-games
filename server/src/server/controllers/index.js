@@ -27,7 +27,7 @@ db.mongoose
   });
 
 const User = db.user;
-const Game = db.game;
+const Spin = db.spin;
 
 export const controllers = {
   fallback: (req, res) => {
@@ -136,7 +136,7 @@ export const controllers = {
       let user = await User.find({
         userId
       });
-      console.log("user", user[0]);
+      //console.log("user", user[0]);
       if (!(user.length > 0)) {
         throw new Error("User not found!");
       }
@@ -162,22 +162,32 @@ export const controllers = {
       if (!userId) {
         throw new Error("'userId' not validated");
       }
+
+      //check currentBalance
+      let user = await User.find({
+        userId
+      });
+      if (!(user.length > 0)) {
+        throw new Error("User not found!");
+      }
+      let { balance } = user[0];
+      if (!(balance > 1)) {
+        throw new Error(`Insufficient balance.`);
+      }
+
+      //log spin game into db with result
       let reels = await wheelReels(REELS);
       let reward = await reelsReward(reels);
-      // let { gridSize: gridsize, walls, entrance } = req.body;
-      // if (!(userId && walls && entrance)) {
-      //   throw new Error("One of required params not passed.");
-      // }
-      // let mazeId = uuid();
-      // let gridSize = gridsize.split("x").map(v => Number(v));
-      // let maze = new Maze({
-      //   mazeId,
-      //   gridSize,
-      //   walls,
-      //   entrance,
-      //   ownerId: userId
-      // });
-      // await maze.save();
+      let mazeId = uuid();
+      let gridSize = gridsize.split("x").map(v => Number(v));
+      let maze = new Maze({
+        mazeId,
+        gridSize,
+        walls,
+        entrance,
+        ownerId: userId
+      });
+      await maze.save();
       return res.json({
         reels,
         reward
