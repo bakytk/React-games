@@ -107,7 +107,7 @@ export const controllers = {
     }
   },
 
-  loadGames: async (req, res) => {
+  getGames: async (req, res) => {
     try {
       let { userId } = req.decode;
       if (!userId) {

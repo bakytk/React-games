@@ -1,11 +1,13 @@
 const { JWT_SECRET } = process.env;
 
 import express from "express";
+import cors from "cors";
 const router = express.Router();
 
 import bodyParser from "body-parser";
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+router.use(cors());
 
 import { controllers } from "./controllers/index.js";
 import { authenticate } from "./auth.js";
@@ -20,7 +22,7 @@ router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
 
-router.post("/loadGames", confirmToken, controllers.loadGames);
+router.get("/getGames", confirmToken, controllers.getGames);
 router.post("/deposit", confirmToken, controllers.deposit);
 router.post("/spin", confirmToken, controllers.spin);
 
