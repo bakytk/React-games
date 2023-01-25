@@ -20,8 +20,8 @@ router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
 
-router.post("/loadGames", confirmToken, controllers.initData);
-// router.get("/turnReel", confirmToken, controllers.getMaze);
+router.post("/loadGames", confirmToken, controllers.loadGames);
+router.get("/spin", confirmToken, controllers.spin);
 
 router.all("/*", controllers.fallback);
 router.use((error, _, res, __) => {

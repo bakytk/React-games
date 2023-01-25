@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { uuid } from "uuidv4";
 import db from "../../db/index.js";
 import { promises as fs } from "fs";
+import { REELS, wheelReels, reelsReward } from "./reel.js";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env");
@@ -106,7 +107,7 @@ export const controllers = {
     }
   },
 
-  initData: async (req, res) => {
+  loadGames: async (req, res) => {
     try {
       let { userId } = req.decode;
       if (!userId) {
@@ -117,38 +118,39 @@ export const controllers = {
       res.json({ data: json });
     } catch (e) {
       console.error(e);
-      res.send(`loadData error: ${e.message}`);
+      res.send(`loadGames error: ${e.message}`);
+    }
+  },
+
+  spin: async (req, res) => {
+    try {
+      let { userId } = req.decode;
+      if (!userId) {
+        throw new Error("'userId' not validated");
+      }
+      let reels = await wheelReels(REELS);
+      let reward = await reelsReward(reels);
+      // let { gridSize: gridsize, walls, entrance } = req.body;
+      // if (!(userId && walls && entrance)) {
+      //   throw new Error("One of required params not passed.");
+      // }
+      // let mazeId = uuid();
+      // let gridSize = gridsize.split("x").map(v => Number(v));
+      // let maze = new Maze({
+      //   mazeId,
+      //   gridSize,
+      //   walls,
+      //   entrance,
+      //   ownerId: userId
+      // });
+      // await maze.save();
+      return res.json({
+        reels,
+        reward
+      });
+    } catch (e) {
+      console.error("spin error", e);
+      res.send(`spin error: ${e.message}`);
     }
   }
-
-  // startSlot: async (req, res) => {
-  //   try {
-  //     let { userId } = req.decode;
-  //     if (!userId) {
-  //       throw new Error("'userId' not validated");
-  //     }
-  //     let { gridSize: gridsize, walls, entrance } = req.body;
-  //     if (!(userId && walls && entrance)) {
-  //       throw new Error("One of required params not passed.");
-  //     }
-  //     let mazeId = uuid();
-  //     let gridSize = gridsize.split("x").map(v => Number(v));
-  //     let maze = new Maze({
-  //       mazeId,
-  //       gridSize,
-  //       walls,
-  //       entrance,
-  //       ownerId: userId
-  //     });
-  //     //console.log("maze created: ", maze);
-  //     await maze.save();
-  //     return res.json({
-  //       message: "Maze successfully created!",
-  //       data: { mazeId }
-  //     });
-  //   } catch (e) {
-  //     console.error("createMaze error", e);
-  //     res.send(`createMaze error: ${e.message}`);
-  //   }
-  // }
 };
