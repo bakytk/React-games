@@ -1,6 +1,5 @@
 
-#Env
-.env
+#root
 .gitignore
 react-games
 
@@ -8,5 +7,6 @@ react-games
 react/node_modules
 
 #Server
+server/.gitignore
 server/.env
 server/node_modules
