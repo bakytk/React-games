@@ -178,19 +178,26 @@ export const controllers = {
       //log spin game into db with result
       let reels = await wheelReels(REELS);
       let reward = await reelsReward(reels);
-      let mazeId = uuid();
-      let gridSize = gridsize.split("x").map(v => Number(v));
-      let maze = new Maze({
-        mazeId,
-        gridSize,
-        walls,
-        entrance,
-        ownerId: userId
+      let spinId = uuid();
+      let spin = new Spin({
+        spinId,
+        reels,
+        reward,
+        userId
       });
-      await maze.save();
+      await spin.save();
+
+      //decrease balance by 1 point
+      balance -= 1;
+      let updateData = {
+        balance
+      };
+      await User.findOneAndUpdate({ userId }, { ...updateData });
+
       return res.json({
         reels,
-        reward
+        reward,
+        balance
       });
     } catch (e) {
       console.error("spin error", e);
