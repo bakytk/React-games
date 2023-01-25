@@ -122,6 +122,40 @@ export const controllers = {
     }
   },
 
+  deposit: async (req, res) => {
+    try {
+      let { userId } = req.decode;
+      if (!userId) {
+        throw new Error("'userId' not validated");
+      }
+      let { coin } = req.body;
+      if (!coin) {
+        throw new Error("'coin' value not passed");
+      }
+      //Get currentBalance of Deposit
+      let user = await User.find({
+        userId
+      });
+      console.log("user", user[0]);
+      if (!(user.length > 0)) {
+        throw new Error("User not found!");
+      }
+      let { balance } = user[0];
+      balance += Number(coin);
+      await User.findOneAndUpdate({ userId }, { balance });
+      return res.json({
+        message: "Coin successfully deposited!",
+        data: {
+          userId,
+          balance
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      res.send(`Deposit error: ${e.message}`);
+    }
+  },
+
   spin: async (req, res) => {
     try {
       let { userId } = req.decode;
