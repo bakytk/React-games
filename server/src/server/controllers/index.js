@@ -109,13 +109,13 @@ export const controllers = {
 
   getGames: async (req, res) => {
     try {
-      let { userId } = req.decode;
-      if (!userId) {
-        throw new Error("'userId' not validated");
-      }
+      // let { userId } = req.decode;
+      // if (!userId) {
+      //   throw new Error("'userId' not validated");
+      // }
       let fileString = await fs.readFile("./src/db/game-data.json", "utf-8");
-      const json = JSON.parse(fileString);
-      res.json({ data: json });
+      const arr = JSON.parse(fileString);
+      res.send(JSON.stringify(arr));
     } catch (e) {
       console.error(e);
       res.send(`loadGames error: ${e.message}`);

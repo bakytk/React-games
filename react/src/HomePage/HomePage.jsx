@@ -1,11 +1,15 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { userActions } from '../_actions';
+import { gameActions } from '../_actions';
 
 class HomePage extends React.Component {
     componentDidMount() {
         this.props.getUsers();
+        this.props.getGames();
     }
 
     handleDeleteUser(id) {
@@ -13,24 +17,19 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const { user, users } = this.props;
+        const { user, users, games } = this.props;
+        //console.log("props games", games);
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h1>Hi {user.firstName}!</h1>
-                <p>You're logged in with React!!</p>
-                <h3>All registered users:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.error && <span className="text-danger">ERROR: {users.error}</span>}
-                {users.items &&
+                <h3>List of games:</h3>
+                {games.loading && <em> Loading games...</em>}
+                {games.error && <span className="text-danger">ERROR: {games.error}</span>}
+                {games.items &&
                     <ul>
-                        {users.items.map((user, index) =>
-                            <li key={user.id}>
-                                {user.firstName + ' ' + user.lastName}
-                                {
-                                    user.deleting ? <em> - Deleting...</em>
-                                    : user.deleteError ? <span className="text-danger"> - ERROR: {user.deleteError}</span>
-                                    : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
-                                }
+                        {games.items.map((game, index) =>
+                            <li key={game.id}>
+                                {game.title}
                             </li>
                         )}
                     </ul>
@@ -44,14 +43,16 @@ class HomePage extends React.Component {
 }
 
 function mapState(state) {
-    const { users, authentication } = state;
+    const { users, authentication, games } = state;
     const { user } = authentication;
-    return { user, users };
+    //console.log("mapstate games", games);
+    return { user, users, games };
 }
 
 const actionCreators = {
     getUsers: userActions.getAll,
-    deleteUser: userActions.delete
+    deleteUser: userActions.delete,
+    getGames: gameActions.getGames,
 }
 
 const connectedHomePage = connect(mapState, actionCreators)(HomePage);
