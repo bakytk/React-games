@@ -18,27 +18,19 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/login`, requestOptions)
+    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
-        .then(data => {
-            let { access_token } = data;
-            localStorage.setItem('reelAccessToken', access_token);
-            let responseJson = {
-                id: 123,
-                username: "john@mail.com",
-                firstName: "firstName",
-                lastName: "lastName",
-                token: 'fake-jwt-token'//access_token
-            };
-            //resolve({ ok: true, text: () => Promise.resolve() });
-            return JSON.stringify(responseJson);
+        .then(user => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('user', JSON.stringify(user));
+
+            return user;
         });
 }
 
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
-    localStorage.removeItem('reelAccessToken');
 }
 
 function getAll() {
@@ -46,6 +38,7 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
+
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
@@ -65,14 +58,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/user`, requestOptions)
-        .then(handleResponse)
-        .then(data => {
-            let { access_token } = data;
-            //console.log("data after register", access_token);
-            localStorage.setItem('reelAccessToken', access_token);
-            return data;
-        });
+    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {

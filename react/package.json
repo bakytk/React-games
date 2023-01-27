@@ -1,9 +1,9 @@
 {
-  "name": "react-games",
+  "name": "react-redux-registration-login-example",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bakytk/React-games.git"
+    "url": "https://github.com/cornflourblue/react-redux-registration-login-example.git"
   },
   "license": "MIT",
   "scripts": {
