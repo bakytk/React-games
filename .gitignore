@@ -2,6 +2,7 @@
 #root
 .gitignore
 react-games
+task/
 
 #React
 react/node_modules

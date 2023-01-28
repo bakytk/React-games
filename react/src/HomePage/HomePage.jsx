@@ -21,7 +21,7 @@ class HomePage extends React.Component {
         //console.log("props games", games);
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.firstName}!</h1>
+                <h1>Welcome!</h1>
                 <h3>List of games:</h3>
                 {games.loading && <em> Loading games...</em>}
                 {games.error && <span className="text-danger">ERROR: {games.error}</span>}

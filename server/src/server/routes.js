@@ -29,7 +29,7 @@ router.post("/spin", confirmToken, controllers.spin);
 router.all("/*", controllers.fallback);
 router.use((error, _, res, __) => {
   console.error(`Processing err: ${error}`);
-  return res.status(500).json({ error: "Processing error" });
+  return res.status(500).json({ error: "Processing error." });
 });
 
 export default router;
