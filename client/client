@@ -1,0 +1,53 @@
+
+https://apollo.vuejs.org/guide/installation.html#_2-install-the-plugin-into-vue
+
+yarn add vue-apollo graphql apollo-boost
+yarn global add fauna-shell
+
+fauna shell vocabulary
+fauna cloud-login
+
+vocab_key
+admin
+==> fnAEb2y87NACTKC8TnGQRZNpOvfq9o7JKxgcxJFj
+
+echo -n "fnAEb2y87NACTKC8TnGQRZNpOvfq9o7JKxgcxJFj:" | base64
+Zm5BRWIyeTg3TkFDVEtDOFRuR1FSWk5wT3ZmcTlvN0pLeGdjeEpGajo=
+
+query POLISH {
+  allPOLISH {
+    data{
+      english
+    }
+  }
+}
+
+mutation CreatePolish {
+   createPOLISH(data: {
+     form: "noun"
+     polskie: "Build an awesome app!"
+     english: false
+     pronunciation:
+   }) {
+     polskie
+     english
+   }
+}
+
+curl -H 'Authorization: Bearer <FAUNA_SECRET>' https://graphql.fauna.com/import?mode=override --data-binary "@path/to/schema.gql"
+
+
+=================================================
+
+https://seanconnolly.dev/simple-graphql-with-faunadb
+
+rock_app
+admin
+fnAEb3sjhrAAwzOfb33vJtX6AfapmujL6U4RoHGi
+
+curl -g \
+-X POST \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer fnAEb2y87NACTKC8TnGQRZNpOvfq9o7JKxgcxJFj" \
+-d '{"query":"query POLISH { allPOLISH { data { english }} }"}' \
+https://graphql.fauna.com/graphql
