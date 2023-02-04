@@ -55,9 +55,8 @@ export const controllers = {
       console.log("signup error", e);
       res.send(`Signup error: ${e.message}`);
     }
-  }
+  },
 
-  /*
   signin: async (req, res) => {
     try {
       let { username, password } = req.body;
@@ -103,8 +102,9 @@ export const controllers = {
       console.error(e);
       res.send(`loadGames error: ${e.message}`);
     }
-  },
+  }
 
+  /*
   deposit: async (req, res) => {
     try {
       let { userId } = req.decode;

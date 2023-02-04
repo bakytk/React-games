@@ -19,10 +19,10 @@ if (!JWT_SECRET) {
 
 //router.post("/auth", authenticate);
 router.get("/alive", controllers.ping);
-// router.post("/user", controllers.signup);
-// router.post("/login", controllers.signin);
+router.post("/user", controllers.signup);
+router.post("/login", controllers.signin);
 
-// router.get("/games", controllers.getGames);
+router.get("/games", controllers.getGames);
 // router.post("/deposit", confirmToken, controllers.deposit);
 // router.post("/spin", confirmToken, controllers.spin);
 
