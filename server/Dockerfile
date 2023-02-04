@@ -1,11 +1,18 @@
+# build step
+FROM node:14-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY tsconfig*.json ./
+COPY src src
+RUN npm run build
+
+# run step
 FROM node:14-alpine
-
-ADD . /reel-game
-WORKDIR /reel-game
-
-COPY package*.json ./reel-game/
-COPY nodemon.json ./reel-game/
+ENV NODE_ENV=production
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-
+COPY --from=builder /app/dist/ dist/
 EXPOSE 15500
-CMD [ "npm", "run", "dev" ]
+ENTRYPOINT [ "npm", "start"]
