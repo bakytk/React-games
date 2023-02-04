@@ -2,32 +2,18 @@ const { JWT_SECRET } = process.env;
 
 import jwt from "jsonwebtoken";
 import { uuid } from "uuidv4";
-import db from "../../db/index.js";
 import { promises as fs } from "fs";
-import { REELS, wheelReels, reelsReward } from "./reel.js";
+import { REELS, wheelReels, reelsReward } from "./reel";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env");
 }
 
-db.mongoose
-  .connect(
-    db.url,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  )
-  .then(() => {
-    console.log("Connected to the database2!");
-  })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
-  });
-
-const User = db.user;
-const Spin = db.spin;
+import connect from "../../db/connect";
+import { User, Spin } from "../../db/models";
+import { IUser } from "../../types/index";
+import { DB_URL } from "../../db/config";
+connect({ DB_URL });
 
 export const controllers = {
   fallback: (req, res) => {
@@ -44,10 +30,6 @@ export const controllers = {
       //console.log("req.body", req.body);
       if (!(username && password)) {
         throw new Error("Username or password absent!");
-      }
-      let names = [firstName, lastName];
-      for (let name of names) {
-        name = name ? name : "";
       }
       let userId = uuid();
       let data = {
@@ -73,8 +55,9 @@ export const controllers = {
       console.log("signup error", e);
       res.send(`Signup error: ${e.message}`);
     }
-  },
+  }
 
+  /*
   signin: async (req, res) => {
     try {
       let { username, password } = req.body;
@@ -204,4 +187,5 @@ export const controllers = {
       res.send(`spin error: ${e.message}`);
     }
   }
+  */
 };

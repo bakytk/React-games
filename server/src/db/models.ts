@@ -1,54 +1,58 @@
-export const Spin = mongoose => {
-  var spinSchema = mongoose.Schema({
-    spinId: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    reels: [
-      {
-        type: String
-      }
-    ],
-    reward: {
-      type: Number
-    },
-    userId: {
-      type: String,
-      required: true
-    }
-  });
-  return mongoose.model("Spin", spinSchema);
-};
+import { IUser, ISpin } from "../types/index";
+import { model, Schema, Model } from "mongoose";
 
-//add constraint that role is either "buyer" or "seller"
-export const User = mongoose => {
-  var userSchema = mongoose.Schema({
-    userId: {
-      type: String,
-      required: true,
-      unique: true
+const UserSchema: Schema = new Schema<IUser>({
+  userId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  balance: {
+    type: Number,
+    validate: {
+      validator: function(input) {
+        return typeof input === "number";
+      },
+      message: "Balance must be a number"
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    password: {
-      type: String,
-      required: true
-    },
-    firstName: {
+    default: 0
+  },
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  }
+});
+
+const SpinSchema: Schema = new Schema<ISpin>({
+  spinId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  reels: [
+    {
       type: String
-    },
-    lastName: {
-      type: String
-    },
-    balance: {
-      type: Number,
-      required: true,
-      default: 0
     }
-  });
-  return mongoose.model("User", userSchema);
-};
+  ],
+  reward: {
+    type: Number
+  },
+  userId: {
+    type: String,
+    required: true
+  }
+});
+
+export const User = model("User", UserSchema);
+export const Spin = model("Spin", SpinSchema);

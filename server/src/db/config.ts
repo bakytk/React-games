@@ -8,16 +8,14 @@ const {
   MONGODB_URI
 } = process.env;
 
-let CONNECTION_URL = "";
+let DB_URL: string = "";
 
 if (DOCKER_ENV) {
-  CONNECTION_URL =
+  DB_URL =
     `mongodb://${DB_USER}:${DB_PWD}@` +
     `${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`;
 } else {
-  CONNECTION_URL = MONGODB_URI;
+  DB_URL = MONGODB_URI;
 }
 
-export default {
-  url: CONNECTION_URL
-};
+export { DB_URL };

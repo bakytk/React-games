@@ -9,13 +9,13 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use(cors());
 
-import { controllers } from "./controllers/index.js";
-import { authenticate } from "./auth.js";
+import { controllers } from "./controllers/index";
+//import { authenticate } from "./auth";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET token");
 }
-const confirmToken = authenticate(JWT_SECRET);
+//const confirmToken = authenticate(JWT_SECRET);
 
 //router.post("/auth", authenticate);
 router.get("/alive", controllers.ping);
