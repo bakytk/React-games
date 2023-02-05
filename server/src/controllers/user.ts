@@ -13,20 +13,19 @@ export const userControllers = {
   signup: async (req, res) => {
     try {
       //validate Body
-      let { username, password } = req.body;
+      let { username, password, country } = req.body;
       console.log("req.body", req.body);
-      if (!(username && password)) {
+      if (!(username && password && country)) {
         throw new Error("Username or password absent!");
       }
-      let data = {
-        username,
-        password
-      };
       let query_str: string = INSERT_USER();
       console.log("query", query_str, username, password);
-      let result = await DB_POOL.query(query_str, [username, password]);
+      let result = await DB_POOL.query(query_str, [
+        username,
+        password,
+        country
+      ]);
       console.log("Result: ", result);
-      //await user.save();
       let tokenData = {
         username
       };

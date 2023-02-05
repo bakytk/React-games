@@ -1,9 +1,10 @@
 export const GET_USERS = function(): string {
-  return `SELECT * FROM user`;
+  return `SELECT * FROM "Users"`;
 };
 
 export const INSERT_USER = function(): string {
-  return `INSERT INTO "user" ("username", "password") VALUES ($1, $2) RETURNING *`;
+  let now = Date.now();
+  return `INSERT INTO "Users" ("username", "password", "country", "balance","createdAt", "updatedAt") VALUES ($1, $2, $3, 0, to_timestamp(${now}), to_timestamp(${now})) RETURNING *`;
 };
 
 //'SELECT * FROM users WHERE id = $1'
