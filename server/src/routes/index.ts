@@ -17,7 +17,6 @@ if (!JWT_SECRET) {
 }
 //const confirmToken = authenticate(JWT_SECRET);
 
-//router.post("/auth", authenticate);
 router.get("/alive", controllers.ping);
 //router.post("/user", controllers.signup);
 //router.post("/login", controllers.signin);

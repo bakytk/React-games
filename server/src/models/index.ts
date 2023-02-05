@@ -1,4 +1,4 @@
-import { Options, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 
 import User from "./user";
 import Game from "./game";
@@ -18,7 +18,7 @@ models.forEach(model => model.initialize(sequelize));
 User.belongsToMany(Game, { through: "User_Games" });
 Game.belongsToMany(User, { through: "User_Games" });
 
-// create tables & reset with: "force: true"
+// create tables with reset
 sequelize.sync({ force: true });
 
 export { sequelize as DB, User, Game };

@@ -1,6 +1,3 @@
-//https://fly.io/blog/using-heroku-postgres-from-a-fly-app/
-//https://blog.logrocket.com/using-sequelize-with-typescript/
-
 const DOCKER_ENV: string = process.env.DOCKER_ENV || "";
 const DB_DOCKER_HOST: string = process.env.DB_DOCKER_HOST || "";
 const DB_CLOUD_HOST: string = process.env.DB_CLOUD_HOST || "";

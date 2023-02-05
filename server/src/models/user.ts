@@ -4,11 +4,6 @@ import { Association, DataTypes, Model, Sequelize } from "sequelize";
 import Game from "./game";
 
 class User extends Model {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
   public id!: number;
   public username!: string;
   public password!: string;

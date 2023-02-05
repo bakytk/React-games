@@ -1,4 +1,14 @@
-import { userControllers } from "./user";
+const { JWT_SECRET } = process.env;
+
+import jwt from "jsonwebtoken";
+import { uuid } from "uuidv4";
+import { promises as fs } from "fs";
+//import { REELS, wheelReels, reelsReward } from "./reel";
+import { DB, User, Game } from "../models/index";
+
+if (!JWT_SECRET) {
+  throw new Error("Missing JWT_SECRET env");
+}
 
 export const controllers = {
   fallback: (req, res) => {
@@ -7,11 +17,42 @@ export const controllers = {
 
   ping: (req, res) => {
     return res.status(200).json({ message: "Pong!" });
-  },
-
-  signup: (req, res) => userControllers.signup(req, res)
+  }
 
   /*
+  signup: async (req, res) => {
+    try {
+      let { firstName, lastName, username, password } = req.body;
+      //console.log("req.body", req.body);
+      if (!(username && password)) {
+        throw new Error("Username or password absent!");
+      }
+      let userId = uuid();
+      let data = {
+        username,
+        password,
+        userId,
+        firstName,
+        lastName
+      };
+      let user = new User({
+        ...data
+      });
+      await user.save();
+      let tokenData = {
+        userId
+      };
+      let token = jwt.sign(tokenData, JWT_SECRET, { expiresIn: "30m" });
+      res.json({
+        message: "Successful registration!",
+        access_token: token
+      });
+    } catch (e) {
+      console.log("signup error", e);
+      res.send(`Signup error: ${e.message}`);
+    }
+  },
+
   signin: async (req, res) => {
     try {
       let { username, password } = req.body;
