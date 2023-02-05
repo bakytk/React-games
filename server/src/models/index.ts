@@ -1,36 +1,24 @@
 import { Options, Sequelize } from "sequelize";
 
-import Class from "./class";
-import Student from "./student";
-import Teacher from "./teacher";
+import User from "./user";
+import Game from "./game";
 
-import config from "../config.json";
+import { DB_NAME, DB_USER, DB_HOST, DB_PWD } from "./config";
 
-// Open database connection
-const sequelize = new Sequelize(
-  config.database.database,
-  config.database.username,
-  config.database.password,
-  <Options>config.database
-);
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PWD, {
+  host: DB_HOST,
+  dialect: "postgres"
+});
 
-// Initialize each model in the database
-// This must be done before associations are made
-let models = [Class, Student, Teacher];
+// init models before associations
+let models = [User, Game];
 models.forEach(model => model.initialize(sequelize));
 
-// Many students in each class
-Class.belongsToMany(Student, { through: "Classes_Students" });
-// Many classes for each student
-Student.belongsToMany(Class, { through: "Classes_Students" });
+// define many-to-many relation
+User.belongsToMany(Game, { through: "User_Games" });
+Game.belongsToMany(User, { through: "User_Games" });
 
-// One teacher for each class
-Class.belongsTo(Teacher);
-// Many classes for one teacher
-Teacher.hasMany(Class);
-
-// Create database tables
-//   force: true causes database to reset with each run
+// create tables & reset with: "force: true"
 sequelize.sync({ force: true });
 
-export { sequelize as Database, Class, Student, Teacher };
+export { sequelize as DB, User, Game };

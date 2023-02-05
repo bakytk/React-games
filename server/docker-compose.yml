@@ -1,0 +1,33 @@
+version: "3.2"
+services:
+
+  reel_game:
+    restart: unless-stopped
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - published: ${SERVER_PORT:-15500}
+        target: 15500
+    environment:
+      - JWT_SECRET=$JWT_SECRET
+      - DB_DOCKER_HOST=pg_reels
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PWD=$DB_PWD
+      - DOCKER_ENV=true
+    depends_on:
+      - pg_reels
+
+  pg_reels:
+    image: postgres:11.2-alpine
+    environment:
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PWD
+      - POSTGRES_DB=$DB_NAME
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

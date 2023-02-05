@@ -3,17 +3,12 @@ const { JWT_SECRET } = process.env;
 import jwt from "jsonwebtoken";
 import { uuid } from "uuidv4";
 import { promises as fs } from "fs";
-import { REELS, wheelReels, reelsReward } from "./reel";
+//import { REELS, wheelReels, reelsReward } from "./reel";
+import { DB, User, Game } from "../models/index";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env");
 }
-
-import connect from "../../db/connect";
-import { User, Spin } from "../../db/models";
-import { IUser } from "../../types/index";
-import { DB_URL } from "../../db/config";
-connect({ DB_URL });
 
 export const controllers = {
   fallback: (req, res) => {
@@ -22,8 +17,9 @@ export const controllers = {
 
   ping: (req, res) => {
     return res.status(200).json({ message: "Pong!" });
-  },
+  }
 
+  /*
   signup: async (req, res) => {
     try {
       let { firstName, lastName, username, password } = req.body;
@@ -102,9 +98,8 @@ export const controllers = {
       console.error(e);
       res.send(`loadGames error: ${e.message}`);
     }
-  }
+  },
 
-  /*
   deposit: async (req, res) => {
     try {
       let { userId } = req.decode;
