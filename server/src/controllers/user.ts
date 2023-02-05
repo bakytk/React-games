@@ -4,31 +4,31 @@ if (!JWT_SECRET) {
 }
 
 import jwt from "jsonwebtoken";
-import { uuid } from "uuidv4";
-import { DB, User } from "../models/index";
+import { DB } from "../db/models/index";
+import { DB_POOL } from "../db/config";
+import { GET_USERS, INSERT_USER } from "../db/queries/index";
+console.log("DB", DB, Object.keys(DB));
 
 export const userControllers = {
   signup: async (req, res) => {
     try {
       //validate Body
-      let { firstName, lastName, username, password } = req.body;
+      let { username, password } = req.body;
       console.log("req.body", req.body);
       if (!(username && password)) {
         throw new Error("Username or password absent!");
       }
-      let userId = uuid();
       let data = {
         username,
-        password,
-        firstName,
-        lastName
+        password
       };
-      let user = await User.create({
-        ...data
-      });
-      console.log("user", user);
+      let query_str: string = INSERT_USER();
+      console.log("query", query_str, username, password);
+      let result = await DB_POOL.query(query_str, [username, password]);
+      console.log("Result: ", result);
+      //await user.save();
       let tokenData = {
-        userId
+        username
       };
       let token = jwt.sign(tokenData, JWT_SECRET, { expiresIn: "30m" });
       res.json({
