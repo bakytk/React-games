@@ -4,28 +4,26 @@ if (!JWT_SECRET) {
 }
 
 import jwt from "jsonwebtoken";
-import { DB } from "../db/models/index";
 import { DB_POOL } from "../db/config";
 import { GET_ALL_USERS, GET_USER, INSERT_USER } from "../db/queries/index";
-console.log("Initializing sequelize: ", DB, Object.keys(DB));
 
 export const userControllers = {
   signup: async (req, res) => {
     try {
       //validate Body
       let { username, password, country } = req.body;
-      console.log("req.body", req.body);
+      //console.log("req.body", req.body);
       if (!(username && password && country)) {
         throw new Error("Username or password absent!");
       }
       let query_str: string = INSERT_USER();
-      console.log("query", query_str, username, password);
+      //console.log("query", query_str, username, password);
       let result = await DB_POOL.query(query_str, [
         username,
         password,
         country
       ]);
-      console.log("Result: ", result);
+      //console.log("Result: ", result);
       let tokenData = {
         username
       };
@@ -47,12 +45,12 @@ export const userControllers = {
         throw new Error("Username or password absent!");
       }
       let query_str: string = GET_USER();
-      console.log("query", query_str, username, password);
+      //console.log("query", query_str, username, password);
       let result = await DB_POOL.query(query_str, [username]);
       if (!(result.rows.length > 0)) {
         throw new Error("Username not found!");
       }
-      console.log("result", result.rows[0]);
+      //console.log("result", result.rows[0]);
       let { password: db_password } = result.rows[0];
       if (db_password != password) {
         throw new Error("Incorrect password!");
@@ -79,7 +77,7 @@ export const userControllers = {
       }
       let query_str: string = GET_ALL_USERS();
       let result = await DB_POOL.query(query_str);
-      console.log("get result:", result);
+      //console.log("get result:", result);
       let tokenData = {
         username
       };
