@@ -1,8 +1,6 @@
 "use strict";
 
 import { Association, DataTypes, Model, Sequelize } from "sequelize";
-import User from "./user";
-import Game from "./game";
 
 class Game extends Model {
   public id!: number;
@@ -14,10 +12,9 @@ class Game extends Model {
     this.init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
-          primaryKey: true,
-          autoIncrement: true
+          primaryKey: true
         },
         UserId: {
           type: DataTypes.INTEGER,
@@ -40,10 +37,14 @@ class Game extends Model {
           },
           onDelete: "cascade",
           onUpdate: "cascade"
+        },
+        Favorite: {
+          type: DataTypes.BOOLEAN
         }
       },
       {
         sequelize: sequelize,
+        tableName: "User_Games",
         name: {
           singular: "User_Game",
           plural: "User_Games"

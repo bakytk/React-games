@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 
 import User from "./user";
 import Game from "./game";
+import UserGame from "./userGame";
 
 import { DB_NAME, DB_USER, DB_HOST, DB_PWD } from "../config";
 
@@ -12,8 +13,10 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PWD, {
 });
 
 // init models before associations
-let models = [User, Game];
-models.forEach(model => model.initialize(sequelize));
+let models = [User, Game, UserGame];
+for (let model of models) {
+  model.initialize(sequelize);
+}
 
 // define many-to-many relation
 User.belongsToMany(Game, { through: "User_Games" });

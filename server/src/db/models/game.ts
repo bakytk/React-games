@@ -44,6 +44,7 @@ class Game extends Model {
       },
       {
         sequelize: sequelize,
+        tableName: "Games",
         name: {
           singular: "Game",
           plural: "Games"
