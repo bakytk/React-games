@@ -19,7 +19,8 @@ if (!JWT_SECRET) {
 
 router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
-//router.post("/login", controllers.signin);
+router.post("/login", controllers.signin);
+router.post("/allUsers", controllers.allUsers);
 
 //router.get("/games", controllers.getGames);
 // router.post("/deposit", confirmToken, controllers.deposit);

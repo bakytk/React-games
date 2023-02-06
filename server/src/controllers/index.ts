@@ -9,41 +9,11 @@ export const controllers = {
     return res.status(200).json({ message: "Pong!" });
   },
 
-  signup: (req, res) => userControllers.signup(req, res)
+  signup: (req, res) => userControllers.signup(req, res),
+  signin: (req, res) => userControllers.signin(req, res),
+  allUsers: (req, res) => userControllers.allUsers(req, res)
 
   /*
-  signin: async (req, res) => {
-    try {
-      let { username, password } = req.body;
-      if (!(username && password)) {
-        throw new Error("Username or password absent!");
-      }
-      let user = await User.find({
-        username,
-        password
-      });
-      //console.log("user", user);
-      if (!(user.length > 0)) {
-        throw new Error("Username not found!");
-      }
-      let { password: db_password, userId } = user[0];
-      if (db_password != password) {
-        throw new Error("Incorrect password!");
-      }
-      let tokenData = {
-        userId
-      };
-      let token = jwt.sign(tokenData, JWT_SECRET, { expiresIn: "30m" });
-      res.json({
-        message: "Successful authentication!",
-        access_token: token
-      });
-    } catch (e) {
-      console.log("signin error", e);
-      res.send(`Signin error: ${e.message}`);
-    }
-  },
-
   getGames: async (req, res) => {
     try {
       // let { userId } = req.decode;
