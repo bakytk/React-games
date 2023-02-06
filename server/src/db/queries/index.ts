@@ -45,5 +45,16 @@ export const GET_ALL_USER_GAMES = function(): string {
 };
 
 export const GET_FAVORITE_GAMES = function(): string {
-  return `SELECT * FROM "User_Games"`;
+  /*
+    "Favorite"
+  */
+  return `
+    SELECT "UserId", "GameId" FROM (
+      SELECT * FROM "Users" u
+      INNER JOIN (
+        SELECT * FROM "User_Games" WHERE "GameId" IN (
+          SELECT "id" FROM "Games" WHERE "type" = 'SLOT')
+      ) g ON u.id = g."UserId"
+    ) sub
+    `;
 };

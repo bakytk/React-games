@@ -2,7 +2,9 @@ import { DB_POOL } from "../db/config";
 import {
   UPDATE_USER_BALANCE,
   GET_USER,
-  GET_ALL_GAMES
+  GET_ALL_GAMES,
+  GET_FAVORITE_GAMES,
+  GET_ALL_USER_GAMES
 } from "../db/queries/index";
 import { REELS, wheelReels, reelsReward } from "./reel";
 import { runSeed } from "../db/seed/index";
@@ -102,8 +104,32 @@ export const gameControllers = {
 
   seedGames: async (req, res) => {
     try {
+      let { username } = req.decode;
+      if (!username) {
+        throw new Error("'username' not validated");
+      }
       let result: string = await runSeed();
       res.send(JSON.stringify({ message: result }));
+    } catch (e) {
+      console.error(e);
+      res.send(`seedGames error: ${e.message}`);
+    }
+  },
+
+  favoriteGames: async (req, res) => {
+    try {
+      let { username } = req.decode;
+      if (!username) {
+        throw new Error("'username' not validated");
+      }
+      //let query = GET_ALL_USER_GAMES();
+      //let result = await DB_POOL.query(query);
+      //console.log("User_games", result.rows);
+
+      let query = GET_FAVORITE_GAMES();
+      let result = await DB_POOL.query(query);
+      console.log("result", result);
+      res.send(JSON.stringify({ data: result.rows }));
     } catch (e) {
       console.error(e);
       res.send(`seedGames error: ${e.message}`);

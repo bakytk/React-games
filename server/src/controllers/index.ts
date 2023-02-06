@@ -19,22 +19,6 @@ export const controllers = {
   deposit: (req, res) => gameControllers.deposit(req, res),
   spin: (req, res) => gameControllers.spin(req, res),
   allGames: (req, res) => gameControllers.allGames(req, res),
-  seedGames: (req, res) => gameControllers.seedGames(req, res)
-
-  /*
-  getGames: async (req, res) => {
-    try {
-      // let { userId } = req.decode;
-      // if (!userId) {
-      //   throw new Error("'userId' not validated");
-      // }
-      let fileString = await fs.readFile("./src/db/game-data.json", "utf-8");
-      const arr = JSON.parse(fileString);
-      res.send(JSON.stringify(arr));
-    } catch (e) {
-      console.error(e);
-      res.send(`loadGames error: ${e.message}`);
-    }
-  }
-  */
+  seedGames: (req, res) => gameControllers.seedGames(req, res),
+  favoriteGames: (req, res) => gameControllers.favoriteGames(req, res)
 };

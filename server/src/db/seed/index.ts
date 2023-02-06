@@ -101,10 +101,5 @@ export async function runSeed() {
     query = INSERT_USER_GAME();
     await DB_POOL.query(query, [userId, gameId, isFavorite]);
   }
-
-  //check userGame inserts
-  query = GET_ALL_USER_GAMES();
-  result = await DB_POOL.query(query);
-  console.log("User_games", result.rows);
   return "Games and users seeded.";
 }
