@@ -49,12 +49,10 @@ export const GET_FAVORITE_GAMES = function(): string {
     "Favorite"
   */
   return `
-    SELECT "UserId", "GameId" FROM (
-      SELECT * FROM "Users" u
+      SELECT "username", "GameId", "Favorite" FROM "Users" u
       INNER JOIN (
-        SELECT * FROM "User_Games" WHERE "GameId" IN (
-          SELECT "id" FROM "Games" WHERE "type" = 'SLOT')
-      ) g ON u.id = g."UserId"
-    ) sub
-    `;
+        SELECT "UserId", "Favorite", "GameId" FROM "User_Games" WHERE "GameId" IN (
+          SELECT "id" FROM "Games" WHERE "type" = 'SLOT' AND "Favorite" IS TRUE)
+        ) g ON u.id = g."UserId"
+      `;
 };

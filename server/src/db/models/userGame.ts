@@ -2,7 +2,7 @@
 
 import { Association, DataTypes, Model, Sequelize } from "sequelize";
 
-class Game extends Model {
+class UserGame extends Model {
   public id!: number;
   public UserId!: number;
   public GameId!: string;
@@ -54,4 +54,4 @@ class Game extends Model {
   }
 }
 
-export default Game;
+export default UserGame;
