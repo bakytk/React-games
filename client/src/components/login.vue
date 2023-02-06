@@ -15,21 +15,21 @@
 
     <b-form @submit.prevent="onSubmit">
 
-      <b-form-group label="E-mail:">
+      <b-form-group label="Username">
 		<div class="center">
 			<div :style="styleObj">
         	<b-form-input class="form-input" v-model="form.username" type="text"
-					  required placeholder=""/>
+				required placeholder=""/>
 			</div>
 		</div>
       </b-form-group>
 
-      <b-form-group label="Password:">
+      <b-form-group label="Password">
 		<div class="center">
 			<div :style="styleObj">
 				<b-form-input
-				  class="form-input" v-model="form.password" type="password"
-							required placeholder=""/>
+				  	class="form-input" v-model="form.password" type="password"
+					required placeholder=""/>
 			</div>
 		</div>
       </b-form-group>

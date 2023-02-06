@@ -3,7 +3,7 @@
 	  <div v-if="!smallDevice">
 		  <div  class="web-wrapper" 
 		  		:style="{ background: 'url(' + images[0]+ ') no-repeat center' }">
-		  	<div style="padding-top: 20%; padding-bottom: 10%;">
+		  	<div style="padding-top: 10%; padding-bottom: 10%;">
 				<template>
 					<register></register>
 			  	</template>

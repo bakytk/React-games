@@ -39,6 +39,5 @@ new Vue({
   axios,
   router,
   store,
-	apolloProvider,
   render: function (h) { return h(App) }
 }).$mount('#app')

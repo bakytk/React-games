@@ -5,49 +5,48 @@
 		<b-alert show variant="primary" v-if="alert.show"> {{ alert.msg }} </b-alert>
 	</p>
 
-    <b-form @submit.prevent="onSubmit">
-		
-      <b-form-group label="E-mail:">
+    <b-form @submit.prevent="onSubmit" v-if="display">		
+      <b-form-group label="Username">
 		<div class="center">
 			<div :style="styleObj">
         	<b-form-input class="form-input" v-model="form.username" type="text" 
-					  required placeholder="" />
+				required placeholder="" />
 			</div>
 		</div>
       </b-form-group>
-      <b-form-group label="Password:">
+      <b-form-group label="Password">
 		<div class="center">
 			<div :style="styleObj">
 			<b-form-input
-			  class="form-input" v-model="form.password" type="password" 
-						required placeholder="" />
+			  	class="form-input" v-model="form.password" type="password" 
+				description="min 6-max 10 characters" required placeholder="min 6-max 10 characters" />
 			</div>
 		</div>
       </b-form-group>
-	  <b-form-group label="Password:">
+	  <b-form-group label="Country">
 		<div class="center">
 			<div :style="styleObj">
 			<b-form-input
-			  class="form-input" v-model="form.country" type="text" 
-						required placeholder="" />
+			  	class="form-input" v-model="form.country" type="text" 
+				required placeholder="" />
 			</div>
 		</div>
       </b-form-group>
-	  <b-form-group label="Password:">
+	  <b-form-group label="Firstname">
 		<div class="center">
 			<div :style="styleObj">
 			<b-form-input
-			  class="form-input" v-model="form.firstName" type="text" 
-						required placeholder="" />
+			  	class="form-input" v-model="form.firstName" type="text" 
+				required placeholder="" />
 			</div>
 		</div>
       </b-form-group>
-	  <b-form-group label="Password:">
+	  <b-form-group label="Lastname">
 		<div class="center">
 			<div :style="styleObj">
 			<b-form-input
-			  class="form-input" v-model="form.lastName" type="text" 
-						required placeholder="" />
+			  	class="form-input" v-model="form.lastName" type="text" 
+			  	required placeholder="" />
 			</div>
 		</div>
       </b-form-group>
@@ -67,7 +66,7 @@ export default {
       return { 
 
       	smallDevice: false,
-	
+		display: true,
 		form: { username: '', password: '', country:'', firstName:'', lastName:''}, 
 		alert: { show: false, msg: ''}
 	  }
@@ -90,8 +89,12 @@ export default {
 			lastName: this.form.lastName
 		})
 		.then(resp => { 
+			console.log("reg response:", resp);
 			this.alert.msg = resp.data.message;
 			this.alert.show = true;
+			if (resp.status === 200) {
+				this.display = false
+			}
 		}); 
       },
 
