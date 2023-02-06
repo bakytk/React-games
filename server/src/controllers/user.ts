@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { DB } from "../db/models/index";
 import { DB_POOL } from "../db/config";
 import { GET_ALL_USERS, GET_USER, INSERT_USER } from "../db/queries/index";
-console.log("DB", DB, Object.keys(DB));
+console.log("Initializing sequelize: ", DB, Object.keys(DB));
 
 export const userControllers = {
   signup: async (req, res) => {

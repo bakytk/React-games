@@ -10,19 +10,19 @@ router.use(bodyParser.json());
 router.use(cors());
 
 import { controllers } from "../controllers/index";
-//import { authenticate } from "./auth";
+import { authenticate } from "../middlewares/auth";
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET token");
 }
-//const confirmToken = authenticate(JWT_SECRET);
+const confirmToken = authenticate(JWT_SECRET);
 
 router.get("/alive", controllers.ping);
 router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
-router.post("/allUsers", controllers.allUsers);
+router.get("/allUsers", confirmToken, controllers.allUsers);
 
-//router.get("/games", controllers.getGames);
+// router.get("/games", controllers.getGames);
 // router.post("/deposit", confirmToken, controllers.deposit);
 // router.post("/spin", confirmToken, controllers.spin);
 
