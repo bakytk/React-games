@@ -22,7 +22,7 @@ router.post("/user", controllers.signup);
 router.post("/login", controllers.signin);
 router.get("/allUsers", confirmToken, controllers.allUsers);
 
-// router.get("/games", controllers.getGames);
+router.get("/allGames", confirmToken, controllers.allGames);
 router.post("/deposit", confirmToken, controllers.deposit);
 router.post("/spin", confirmToken, controllers.spin);
 

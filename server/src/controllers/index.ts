@@ -17,7 +17,8 @@ export const controllers = {
   allUsers: (req, res) => userControllers.allUsers(req, res),
 
   deposit: (req, res) => gameControllers.deposit(req, res),
-  spin: (req, res) => gameControllers.spin(req, res)
+  spin: (req, res) => gameControllers.spin(req, res),
+  allGames: (req, res) => gameControllers.allGames(req, res)
 
   /*
   getGames: async (req, res) => {

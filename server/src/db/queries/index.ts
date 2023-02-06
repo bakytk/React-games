@@ -24,6 +24,10 @@ export const INSERT_GAME = function(): string {
   return `INSERT INTO "Games" ("id", "type", "slug", "title", "providerName", "thumbUrl", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, to_timestamp(${now}), to_timestamp(${now})) RETURNING *`;
 };
 
+export const GET_ALL_GAMES = function(): string {
+  return `SELECT * FROM "Games"`;
+};
+
 //'SELECT * FROM users WHERE id = $1'
 //'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *'
 

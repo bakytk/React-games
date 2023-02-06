@@ -1,5 +1,9 @@
 import { DB_POOL } from "../db/config";
-import { UPDATE_USER_BALANCE, GET_USER } from "../db/queries/index";
+import {
+  UPDATE_USER_BALANCE,
+  GET_USER,
+  GET_ALL_GAMES
+} from "../db/queries/index";
 import { REELS, wheelReels, reelsReward } from "./reel";
 
 export const gameControllers = {
@@ -74,6 +78,24 @@ export const gameControllers = {
     } catch (e) {
       console.error("spin error", e);
       res.send(`spin error: ${e.message}`);
+    }
+  },
+
+  allGames: async (req, res) => {
+    try {
+      let { username } = req.decode;
+      if (!username) {
+        throw new Error("'username' not validated");
+      }
+      let query_str: string = GET_ALL_GAMES();
+      let result = await DB_POOL.query(query_str);
+      if (!(result.rows.length > 0)) {
+        throw new Error("Games not found!");
+      }
+      res.send(JSON.stringify({ data: result.rows }));
+    } catch (e) {
+      console.error(e);
+      res.send(`loadGames error: ${e.message}`);
     }
   }
 };
