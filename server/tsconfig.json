@@ -6,7 +6,9 @@
     "downlevelIteration": true,
     "lib": ["es6", "dom"],
     "strict": false,
-    "outDir": "dist"
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src"]
 }

@@ -11,6 +11,10 @@ router.use(cors());
 
 import { controllers } from "../controllers/index";
 import { authenticate } from "../middlewares/auth";
+import { validation } from "../middlewares/validation";
+
+const registerValidator = validation("registration");
+const loginValidator = validation("login");
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET token");
@@ -18,8 +22,8 @@ if (!JWT_SECRET) {
 const confirmToken = authenticate(JWT_SECRET);
 
 router.get("/alive", controllers.ping);
-router.post("/user", controllers.signup);
-router.post("/login", controllers.signin);
+router.post("/user", registerValidator, controllers.signup);
+router.post("/login", loginValidator, controllers.signin);
 router.get("/allUsers", confirmToken, controllers.allUsers);
 
 router.post("/deposit", confirmToken, controllers.deposit);

@@ -45,9 +45,7 @@ export const GET_ALL_USER_GAMES = function(): string {
 };
 
 export const GET_FAVORITE_GAMES = function(): string {
-  /*
-    "Favorite"
-  */
+  /* */
   return `
       SELECT "username", "GameId", "Favorite" FROM "Users" u
       INNER JOIN (
