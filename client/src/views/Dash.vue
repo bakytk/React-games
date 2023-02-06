@@ -1,7 +1,4 @@
 <template>
-
-  <!-- background-color: blue; color: white; -->
-
   <div id="app" style="padding-bottom: 5%;">
 
 	<div style="padding-top: 1%; padding-bottom: 2%;">
@@ -16,7 +13,7 @@
 
 	<div style="padding-top: 4%; padding-bottom: 2%;">
 		<div class="text-center">
-			<h3> Polish Vocabulary </h3>
+			<h3> Games list </h3>
 		</div>
 	</div>
 
@@ -56,33 +53,22 @@
 <script>
 
 import { mapGetters } from 'vuex';
-import auth from '@/auth' //../auth
 import { bus } from '@/main'
-
 import dash from '@/components/dash.vue'
-import editor from '@/components/editor.vue'
-import sharer from '@/components/sharer.vue'
 
 export default {
 
 	components: {
         dash,
-        editor,
-        sharer
     },
 
     data() {
       return {
-
 		add_note_text: '',
-
 		name: '',
-
 		edit_note_id: -1,
 		shared_note_link: '',
-
-	    alert: { show: false, msg: ''},
-
+		alert: { show: false, msg: ''},
       }
     },
     computed: {
@@ -99,10 +85,8 @@ export default {
 
 		 logout () {
   			this.$store.state.user='';
-  			auth.logout( logout => {
-  				this.$router.push('/login');
-  			});
-  			window.localStorage.removeItem('notes-app');
+  			this.$router.push('/login');
+  			window.localStorage.removeItem('reels-app');
 		},
 
 		hideEditor () {
@@ -116,9 +100,9 @@ export default {
 
 	mounted () {
 
-		const claims = auth.parseJwt(localStorage.idToken)
+		//const claims = auth.parseJwt(localStorage.idToken)
     	//console.jwt(window.localStorage.idToken)
-    	this.name = claims['name']
+    	//this.name = claims['name']
 
 	    bus.$on('serverResponse', (msg) => {
 	      this.alert.msg = msg;

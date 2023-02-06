@@ -18,7 +18,7 @@
       <b-form-group label="E-mail:">
 		<div class="center">
 			<div :style="styleObj">
-        	<b-form-input class="form-input" v-model="form.id" type="email"
+        	<b-form-input class="form-input" v-model="form.username" type="text"
 					  required placeholder=""/>
 			</div>
 		</div>
@@ -42,40 +42,35 @@
 </template>
 
 <script>
-
-import auth from '@/auth'
-
 export default {
-
     data() {
       return {
       	smallDevice: false,
-				form: { id: '', password: ''},
-				alert: { show: false, msg: ''},
-				error: false
-			}
+		form: { username: '', password: ''},
+		alert: { show: false, msg: ''},
+		error: false
+	  }
     },
 
     computed: {
-		  styleObj: function () {
+		styleObj: function () {
 		    return !this.smallDevice ? '{ width: 40%; }' : '{width: 80%;}'
-		  }
-		},
+		}
+	},
 
     methods: {
-
       onSubmit() {
-
-	      auth.login(this.form.id, this.form.password, loggedIn => {
-
-	      	if (!loggedIn) {
-	           this.error = true
-	        } else {
-	           this.$store.state.user = this.form.id;
-	           this.$store.dispatch ('loadNotes');
-	           this.$router.push('/dashboard');
-	         }
-	      })
+		this.$axios.post('/login', {
+			username: this.form.username,
+			password: this.form.password
+		})
+		.then(resp => { 
+			this.alert.msg = resp.data.message;
+			this.alert.show = true;
+	        this.$store.state.user = this.form.username;
+	        this.$store.dispatch ('loadGames');
+	        this.$router.push('/dashboard');
+		}); 
 	  }
     },
 
@@ -87,20 +82,16 @@ export default {
 
 
 <style>
-
 .form-input {
 	width: 360px;
 	background-color: rgba(0,0,255,.1)
 }
-
 .center {
 	display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .error {
     color: red;
-  }
-
+}
 </style>

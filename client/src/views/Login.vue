@@ -1,32 +1,23 @@
 <template>
   <div>
-	  
 	  <div v-if="!smallDevice">
 		  <div class="hero" v-bind:style="{ background: 'url(' + images[0]+ ') no-repeat center' }">
-
 			<template>
 				<login></login>
 		  	</template>
-
 		  </div>
 	  </div>
-
 	  <div v-if="smallDevice">
 		  <div class="hero" v-bind:style="{ background: 'url(' + images[1]+ ') no-repeat center' }">
-
 			<template>
 				<login></login>
 		  	</template>
-			  
 		  </div>
 	  </div>
-	  
   </div>
-	
 </template>
 
-<script>
-	
+<script>	
 import fetchPhoto from '@/mixins/PhotoAPI'
 import login from '@/components/login.vue'
 	
@@ -38,12 +29,9 @@ export default {
 
   data () {
 	return {
-	
 		smallDevice: false,
-	
 		imgID: [373076, 2528118],
 		images: [],
-
 	}
   },
 	
@@ -51,15 +39,12 @@ export default {
   },
 	
   created () {
-	
 		try {
 			fetchPhoto (this.imgID, this.images);
 	
 		} catch(e) { console.error (e); }
-   },
-	
+  },
   mounted () {
-
 		if (this.$mq ==='mobile' || this.$mq ==='tablet') { this.smallDevice = true; }
   },
 }

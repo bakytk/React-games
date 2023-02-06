@@ -1,7 +1,6 @@
 <template>
 	
-  <div style="">
-	  
+  <div style="">	  
 	<p style="height: 50px;">
 		<b-alert show variant="primary" v-if="alert.show"> {{ alert.msg }} </b-alert>
 	</p>
@@ -11,17 +10,43 @@
       <b-form-group label="E-mail:">
 		<div class="center">
 			<div :style="styleObj">
-        	<b-form-input class="form-input" v-model="form.id" type="email" 
+        	<b-form-input class="form-input" v-model="form.username" type="text" 
 					  required placeholder="" />
 			</div>
 		</div>
       </b-form-group>
-
       <b-form-group label="Password:">
 		<div class="center">
 			<div :style="styleObj">
 			<b-form-input
 			  class="form-input" v-model="form.password" type="password" 
+						required placeholder="" />
+			</div>
+		</div>
+      </b-form-group>
+	  <b-form-group label="Password:">
+		<div class="center">
+			<div :style="styleObj">
+			<b-form-input
+			  class="form-input" v-model="form.country" type="text" 
+						required placeholder="" />
+			</div>
+		</div>
+      </b-form-group>
+	  <b-form-group label="Password:">
+		<div class="center">
+			<div :style="styleObj">
+			<b-form-input
+			  class="form-input" v-model="form.firstName" type="text" 
+						required placeholder="" />
+			</div>
+		</div>
+      </b-form-group>
+	  <b-form-group label="Password:">
+		<div class="center">
+			<div :style="styleObj">
+			<b-form-input
+			  class="form-input" v-model="form.lastName" type="text" 
 						required placeholder="" />
 			</div>
 		</div>
@@ -43,15 +68,13 @@ export default {
 
       	smallDevice: false,
 	
-		form: { id: '', password: ''}, 
+		form: { username: '', password: '', country:'', firstName:'', lastName:''}, 
 		alert: { show: false, msg: ''}
 	  }
     },
 
     computed: {
-
 	  styleObj: function () {
-
 	    return !this.smallDevice ? '{ width: 40%; }' : '{width: 80%;}'
 	  }
 	},
@@ -59,12 +82,14 @@ export default {
     methods: {
 	
       onSubmit() {
-
-      	//hash-pwd
-	
-		this.$axios.post('/register?id=' +this.form.id+ '&password=' +this.form.password)
+		this.$axios.post('/user', {
+			username: this.form.username,
+			password: this.form.password,
+			country: this.form.country,
+			firstName: this.form.firstName,
+			lastName: this.form.lastName
+		})
 		.then(resp => { 
-	
 			this.alert.msg = resp.data.message;
 			this.alert.show = true;
 		}); 

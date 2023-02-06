@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/"> Homepage </router-link>
       <router-link to="/login" v-if="!loggedIn"> | Login </router-link>
-	    <!-- <router-link to="/register" v-if="!loggedIn"> | Register </router-link>  -->
+	    <router-link to="/register" v-if="!loggedIn"> | Register </router-link>  
       <router-link to="/dashboard" v-if="loggedIn"> | Dashboard </router-link>
     </div>
     <router-view/>
@@ -15,13 +15,11 @@ import auth from './auth'
 export default {
     data () {
       return {
-        loggedIn: auth.loggedIn()
+        loggedIn: this.$store.state.loggedIn
       }
     },
     created () {
-      auth.onChange = loggedIn => {
-        this.loggedIn = loggedIn
-      }
+      //
     }
   }
 </script>

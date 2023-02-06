@@ -1,6 +1,5 @@
 <template>
   <div>
-
 	  <div v-if="!smallDevice">
 		  <div class="hero" :style="{ background: 'url(' + images[0]+ ') no-repeat center' }">
 
@@ -11,7 +10,6 @@
 			</div>
 		  </div>
 	  </div>
-
 	  <div v-if="smallDevice">
 		  <div class="hero" :style="{ background: 'url(' + images[1]+ ') no-repeat center' }">
 
@@ -20,13 +18,10 @@
 			</div>
 		  </div>
 	  </div>
-
   </div>
-
 </template>
 
 <script>
-
 import fetchPhoto from '@/mixins/PhotoAPI'
 
 export default {
@@ -36,7 +31,7 @@ export default {
   		smallDevice: false,
   		imgID: [373076, 2528118],
   		images: [],
-  		text: 'Foreign Language Learning Assistant',
+  		text: 'Reels machine API',
   	}
   },
 
@@ -60,14 +55,12 @@ export default {
 </script>
 
 <style scoped>
-
 .hero {
 	width: 100%;
     height: 800px;
     background-size: cover;
 	Z-index:0;
 }
-
 .web-text {
 
 	margin-left: auto;

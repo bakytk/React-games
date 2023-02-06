@@ -4,11 +4,10 @@ Vue.use(Vuex)
 
 import VuexPersist from 'vuex-persist'
 const vuexPersist = new VuexPersist({
-  key: 'vocab-app',
+  key: 'reels-app',
   storage: window.localStorage
 })
 
-import auth from '@/auth'
 import { bus } from '@/main'
 import { filterJSN } from '@/mixins'
 
@@ -17,6 +16,7 @@ export default new Vuex.Store({
   state: {
 	  words: [],
 	  user: '',
+	  loggedIn: false
   },
 
   getters: {
