@@ -4,6 +4,7 @@ const DB_CLOUD_HOST: string = process.env.DB_CLOUD_HOST || "";
 const DB_NAME: string = process.env.DB_NAME || "";
 const DB_USER: string = process.env.DB_USER || "";
 const DB_PWD: string = process.env.DB_PWD || "";
+const DB_URL: string = process.env.DB_URL || "";
 
 import { Pool } from "pg";
 

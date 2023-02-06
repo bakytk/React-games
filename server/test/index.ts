@@ -1,7 +1,7 @@
 import { describe, it } from "mocha";
 import chai from "chai";
 import chaiHttp from "chai-http";
-import server from "../src/server/index.js";
+import server from "../src/index";
 const should = chai.should();
 chai.use(chaiHttp);
 
@@ -16,7 +16,10 @@ before(function(done) {
     .set("content-type", "application/json")
     .send({
       username: `User-${Math.floor(Math.random() * 10000)}`,
-      password: "1234"
+      password: "123456",
+      country: "Malta",
+      firstName: null,
+      lastName: null
     })
     .then(function(res) {
       ACCESS_TOKEN = res.body.access_token;
@@ -27,7 +30,7 @@ before(function(done) {
     });
 });
 
-describe("slot machine", function() {
+describe("reels game", function() {
   it("deposit", function(done) {
     agent
       .post("/deposit")
@@ -47,7 +50,7 @@ describe("slot machine", function() {
         .set("authorization", `Bearer ${ACCESS_TOKEN}`)
         .send({})
         .end(function(err, res) {
-          //console.log("spin response", res.body);
+          console.log("spin response", res.body);
           res.should.have.status(200);
           done();
         });
