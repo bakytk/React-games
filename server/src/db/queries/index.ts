@@ -28,11 +28,22 @@ export const GET_ALL_GAMES = function(): string {
   return `SELECT * FROM "Games"`;
 };
 
-export const ALTER_TABLE_USER_GAMES = function(): string {
+export const ADD_COL_USER_GAMES = function(): string {
   return `ALTER TABLE "User_Games"
     ADD COLUMN "Favorite" BOOLEAN DEFAULT FALSE;`;
 };
-//'SELECT * FROM users WHERE id = $1'
-//'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *'
 
-//https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
+export const INSERT_USER_GAME = function(): string {
+  let now = Date.now();
+  return `INSERT INTO "User_Games"
+    ("UserId", "GameId", "Favorite", "createdAt", "updatedAt")
+    VALUES ($1, $2, $3, to_timestamp(${now}), to_timestamp(${now})) RETURNING *`;
+};
+
+export const GET_ALL_USER_GAMES = function(): string {
+  return `SELECT * FROM "User_Games"`;
+};
+
+export const GET_FAVORITE_GAMES = function(): string {
+  return `SELECT * FROM "User_Games"`;
+};

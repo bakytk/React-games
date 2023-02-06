@@ -27,6 +27,7 @@ router.post("/spin", confirmToken, controllers.spin);
 
 router.post("/seedGames", confirmToken, controllers.seedGames);
 router.get("/allGames", confirmToken, controllers.allGames);
+//router.get("/favoriteGames", confirmToken, controllers.favoriteGames);
 
 router.all("/*", controllers.fallback);
 router.use((error, _, res, __) => {
