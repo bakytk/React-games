@@ -5,6 +5,7 @@ import {
   GET_ALL_GAMES
 } from "../db/queries/index";
 import { REELS, wheelReels, reelsReward } from "./reel";
+import { runSeed } from "../db/seed/index";
 
 export const gameControllers = {
   deposit: async (req, res) => {
@@ -96,6 +97,16 @@ export const gameControllers = {
     } catch (e) {
       console.error(e);
       res.send(`loadGames error: ${e.message}`);
+    }
+  },
+
+  seedGames: async (req, res) => {
+    try {
+      let result: string = await runSeed();
+      res.send(JSON.stringify({ message: result }));
+    } catch (e) {
+      console.error(e);
+      res.send(`seedGames error: ${e.message}`);
     }
   }
 };

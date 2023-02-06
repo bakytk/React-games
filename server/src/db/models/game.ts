@@ -27,8 +27,7 @@ class Game extends Model {
         },
         type: {
           type: DataTypes.STRING,
-          allowNull: false,
-          unique: true
+          allowNull: false
         },
         slug: {
           type: DataTypes.STRING

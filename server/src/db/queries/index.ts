@@ -28,6 +28,10 @@ export const GET_ALL_GAMES = function(): string {
   return `SELECT * FROM "Games"`;
 };
 
+export const ALTER_TABLE_USER_GAMES = function(): string {
+  return `ALTER TABLE "User_Games"
+    ADD COLUMN "Favorite" BOOLEAN DEFAULT FALSE;`;
+};
 //'SELECT * FROM users WHERE id = $1'
 //'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *'
 

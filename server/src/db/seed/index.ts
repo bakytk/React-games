@@ -28,21 +28,17 @@ export async function runSeed() {
     query = INSERT_USER();
     await DB_POOL.query(query, [username, password, country]);
   }
-  //let content = await fs.readdir("dist/db/seed");
-  //console.log("folder content:", content);
-  //let fileString = await fs.readFile("./dist/db/seed/game-data.json", "utf-8");
-  //const games = JSON.parse(fileString);
   for (let game of GameArray) {
-    let {
-      id,
-      slug,
-      title,
-      providerName,
-      thumb: { url: thumbUrl }
-    } = game;
-    thumbUrl = thumbUrl ? thumbUrl : "";
+    let { id, slug, title, providerName, thumb } = game;
+    let thumbUrl = "";
+    if (thumb) {
+      let { url } = thumb;
+      if (url) {
+        thumbUrl = url;
+      }
+    }
 
-    //check if already exist first
+    //check if Game already inserted in DB
     query = GET_GAME();
     let result = await DB_POOL.query(query, [id]);
     if (result.rows.length > 0) {
@@ -61,5 +57,5 @@ export async function runSeed() {
       ]);
     }
   }
-  return "Users seeded.";
+  return "Games and users seeded.";
 }

@@ -18,7 +18,8 @@ export const controllers = {
 
   deposit: (req, res) => gameControllers.deposit(req, res),
   spin: (req, res) => gameControllers.spin(req, res),
-  allGames: (req, res) => gameControllers.allGames(req, res)
+  allGames: (req, res) => gameControllers.allGames(req, res),
+  seedGames: (req, res) => gameControllers.seedGames(req, res)
 
   /*
   getGames: async (req, res) => {
