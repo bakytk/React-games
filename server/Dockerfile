@@ -5,7 +5,6 @@ COPY package*.json ./
 RUN npm ci
 COPY tsconfig*.json ./
 COPY src src
-COPY test test
 RUN npm run build
 
 # run step
@@ -16,4 +15,4 @@ COPY package*.json ./
 RUN npm install
 COPY --from=builder /app/dist/ dist/
 EXPOSE 15500
-ENTRYPOINT [ "npm", "test"]
+ENTRYPOINT [ "npm", "start"]

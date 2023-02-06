@@ -6,11 +6,11 @@ kill_timeout = 5
 processes = []
 
 [env]
-  JWT_SECRET="76576R67UT"
-  DB_USER="postgres"
-  DB_CLOUD_HOST="reels-db.internal"
-  DB_PWD="P1GcNJJRzjzfhev"
-  DB_NAME="reels"
+  JWT_SECRET=""
+  DB_USER=""
+  DB_CLOUD_HOST=""
+  DB_PWD=""
+  DB_NAME=""
 
 [experimental]
   auto_rollback = true
