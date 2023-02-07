@@ -17,7 +17,9 @@ export default new Vuex.Store({
 	  games: [],
 	  token: '',
 	  login: false,
-	  balance: 0
+	  balance: 0, 
+	  reward: 0,
+	  reels: []
   },
 
   getters: {
@@ -35,6 +37,12 @@ export default new Vuex.Store({
 	},
 	SET_TOKEN (state, arg) {
 		state.token = arg;
+  	},
+	SET_REWARD (state, arg) {
+		state.reward = arg;
+  	},
+	SET_REELS (state, arg) {
+		state.reels = arg;
   	},
 	TOGGLE_LOGIN (state, arg) {
 		state.login = arg;
@@ -55,11 +63,11 @@ export default new Vuex.Store({
 				'Authorization': 'Bearer ' + state.token,
 				'Content-Type': 'application/json'
 			}
-			};
+		};
 
 		Vue.axios(config)
 			.then(r => {
-				console.log("allGames response: ", r.data)
+				//console.log("allGames response: ", r.data)
 				let data = r.data.data;
 				if (data.length === 0) {
 					bus.$emit('serverResponse', 'You have no words in vocabulary yet');
@@ -79,6 +87,14 @@ export default new Vuex.Store({
 
 	setBalance ({ commit, state }, arg) {
 		commit('SET_BALANCE', arg);
+	},
+
+	setReward ({ commit, state }, arg) {
+		commit('SET_REWARD', arg);
+	},
+
+	setReels ({ commit, state }, arg) {
+		commit('SET_REELS', arg);
 	},
 
 	toggleLogin ({ commit, state }, arg) {
