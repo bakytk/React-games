@@ -1,13 +1,6 @@
 <template>
   <div id="app" style="padding-bottom: 5%;">
 
-	<div style="padding-top: 1%; padding-bottom: 2%;">
-		<div class="text-center">
-			<h5> {{ user }} </h5>
-			<h5> {{ name }} </h5>
-		</div>
-	</div>
-
   <b-button @click.prevent="logout"
 			  variant="danger" size="lg" class="btn-right"> Logout </b-button>
 

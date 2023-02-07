@@ -3,13 +3,9 @@
   <div style="background-color: none;">
     	<b-table  striped hover :items="getGames" :fields="fields">
 
-       <template v-slot:cell(edit)="row">
-          <b-btn variant="success" size="md" class="btn-circle" @click="change (row.index)">
-            <b>Change</b></b-btn>
-          <!-- <b-btn variant="info" size="md" class="btn-circle" @click="share (row.index)">
-            <b style="color: white">Share</b></b-btn> -->
-          <b-btn variant="danger" size="md" class="btn-circle" @click="del (row.index)">
-            <b>Delete</b></b-btn>
+       <template v-slot:cell(image)="row">
+          <img :src="'https://' + getGames[row.index]['thumbUrl']" 
+            width="50" height="50" alt="None" />
         </template>
 
       </b-table>
@@ -19,18 +15,18 @@
 <script>
 
 import { bus } from '@/main'
-import { mapGetters } from 'vuex';
 
 export default {
 
   data() {
       return {
          fields: [
+           { key: 'image', label: 'image' },
            { key: 'id', label: 'game_id' },
            { key: 'slug', label: 'slug' },
            { key: 'title', label: 'title' },
            { key: 'providerName', label: 'providerName' },
-           { key: 'tumbUrl', label: 'thumbUrl' }
+           { key: 'type', label: 'type' }
          ],
 
         alert : { msg: '', show: false },
@@ -41,6 +37,11 @@ export default {
 
     getGames () {
       return this.$store.state.games;
+    },
+    imageUrl (i) {
+      let game = this.$store.state.games[i];
+      //if (Object.keys(game).includes("thumbUrl")) return game.thumbUrl;
+      return game;
     },
   },
 
