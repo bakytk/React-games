@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "62d4452b-9060-49b5-8bd1-09163620b40c",
+		"name": "REEL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18542445"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bako\",\n    \"password\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "https://reels.fly.dev/login",
+					"protocol": "https",
+					"host": [
+						"reels",
+						"fly",
+						"dev"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "allUsers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU2ODY1OTAsImV4cCI6MTY3NTY4ODM5MH0.UIjtI3AizOtASLuZo7sO08MmiPiOiQJcXpdNoUmWH1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:15500/allUsers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"allUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bako\",\n    \"password\": \"123456\",\n    \"country\": \"Malta\",\n    \"firstName\": null,\n    \"lastName\": null\n}"
+				},
+				"url": {
+					"raw": "https://reels.fly.dev/user",
+					"protocol": "https",
+					"host": [
+						"reels",
+						"fly",
+						"dev"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loadGames",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU2ODY5NTQsImV4cCI6MTY3NTY4ODc1NH0.cp-FHEjkkwhdQ5h4okwLBfiQjlwz1vJzXl3kSkhRFVQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bak@outlook.com\",\n    \"password\": 1234\n}"
+				},
+				"url": {
+					"raw": "http://localhost:15500/allGames",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"allGames"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "seedGames",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU3MTczOTksImV4cCI6MTY3NTcxOTE5OX0.i0h40XY4VyeKI9jEQxYY2BX65bAwn0EaXgeddpKy9zE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bak@outlook.com\",\n    \"password\": 1234\n}"
+				},
+				"url": {
+					"raw": "https://reels.fly.dev/allGames",
+					"protocol": "https",
+					"host": [
+						"reels",
+						"fly",
+						"dev"
+					],
+					"path": [
+						"allGames"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "favGames",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU2OTgzOTQsImV4cCI6MTY3NTcwMDE5NH0.VHPWVV9v9xiwlj5xHUWa9vooBo-lOIvOr8esfQh1bXQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bak@outlook.com\",\n    \"password\": 1234\n}"
+				},
+				"url": {
+					"raw": "http://localhost:15500/favoriteGames",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"favoriteGames"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deposit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU3MTM1MDQsImV4cCI6MTY3NTcxNTMwNH0.UQjkBFvaAqPN3k0BUTp5ylN4S0TWaYz3EXgHEptwBXQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"coin\": 20\n}"
+				},
+				"url": {
+					"raw": "http://localhost:15500/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "spin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJha28iLCJpYXQiOjE2NzU3MTM1MDQsImV4cCI6MTY3NTcxNTMwNH0.UQjkBFvaAqPN3k0BUTp5ylN4S0TWaYz3EXgHEptwBXQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"bak@outlook.com\",\n    \"password\": 1234\n}"
+				},
+				"url": {
+					"raw": "http://localhost:15500/spin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"spin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:15500/alive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "15500",
+					"path": [
+						"alive"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

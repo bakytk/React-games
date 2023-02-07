@@ -4,11 +4,14 @@
 
 - Express-based server, supporting the following endpoints:
 
-1.  `/login`[POST]: sign-up
-1.  `/user` [POST]: login
+1.  `/login`[POST]: sign-up, expecting `username` and `password` both mandatory
+1.  `/user` [POST]: `username`, `password`, `country` fields are mandatory, `firstName` and `lastName` nullable, but not undefined
+After `login` Bearer JWT-token will be issued, and required for endpoints:
 1.  `/games` [GET]: to fetch list of games in JSON format
 1.  `/deposit` [POST]: insert "coin" into slot machine, default value: 20
 1.  `/spin` [POST]: spin the reels, returning reward, with following logic:
+
+###### Instructions for reel machine reward
 
 ```
 # slot machines only consider pairs a match if they are in order from left to right:
@@ -22,31 +25,53 @@ Rewards
 ● 3 lemons in a row: 3 coins
 ```
 
-##### Develop, test and build
+###### Database
+
+1. `sequlize` is used to create (initiate) tables, schema is left as default `public`
+1. For seeding data with `games.json` and inserting custom users, `db/seed/index.ts` is used
+1. For deployment, `fly.io` service is used, as it has free support for `postgres` database
+
+Use the following commands to run and deploy:
 
 ```
-# start Mongo database:
-docker-compose up mongo_reel
+cd server
 
-# START: Express app, and send sample curl below or
-# collection of Postman requests  [included in a separate repo for convenience as json file]
-npm start
+# local development with docker-hosted postgres
+docker-compose run --build
 
-# TEST: 3 tests:
-# 1)
-npm test
+#deploy
+fly auth signup
+fly launch
+
+# provided with following url: https://reels.fly.dev
 ```
 
-#### Front-end (in progress)
+To check the work of backend from POSTMAN, consult `postman` with json-file of a collection with requests
 
-- React-based app, supporting the following features:
+#### Front-end
 
-1.  `/login-register`: get a JWT-token for the protected page
-1.  `/dashboard`: where a user can:
-    1.  `list` the games available with pictures (fetched by url)
-    1.  `search` for a game, list of games below will be update
-    1.  `spin` the reels and see its reward
+The web app was built with Vue.js SPA
+
+1. On the front-end, `/login-register` are available to register and get JWT-token, and stored in-memory
+1. On the protected page, `/dashboard`, a user can:
+    1.  see a list of games from backend as per `games.json` file
+    1.  With `deposit` button, a user can `20` coins to his balance
+    1.  While `spin` button, wheels the reels on the backend, returing reward outcome & debiting balance by `1` coin
+    1.  `search` for a game with dynamic list - not implemented
+
+To deploy, `netlify` service was used as follows:
 
 ```
+cd client 
 
+# development
+npm run serve
+npm run build
+
+# deploy
+netlify login
+netlify init
+
+netlify deploy --build
+# provided with following link: https://reels-game.netlify.app/
 ```
