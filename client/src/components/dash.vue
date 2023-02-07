@@ -1,7 +1,7 @@
 
 <template>
   <div style="background-color: none;">
-    	<b-table  striped hover :items="getNotes" :fields="fields">
+    	<b-table  striped hover :items="getGames" :fields="fields">
 
        <template v-slot:cell(edit)="row">
           <b-btn variant="success" size="md" class="btn-circle" @click="change (row.index)">
@@ -26,11 +26,11 @@ export default {
   data() {
       return {
          fields: [
-           { key: 'english', label: 'English' },
-           { key: 'polskie', label: 'Polskie' },
-           { key: 'form', label: 'Form' },
-           { key: 'pronunciation', label: 'Pronunciation' },
-           { key: 'Edit', label: 'Edit' }
+           { key: 'id', label: 'game_id' },
+           { key: 'slug', label: 'slug' },
+           { key: 'title', label: 'title' },
+           { key: 'providerName', label: 'providerName' },
+           { key: 'tumbUrl', label: 'thumbUrl' }
          ],
 
         alert : { msg: '', show: false },
@@ -39,9 +39,8 @@ export default {
 
   computed: {
 
-		//...mapGetters (['GET_NOTES']),
-    getNotes () {
-      return this.$store.state.words;
+    getGames () {
+      return this.$store.state.games;
     },
   },
 
@@ -52,27 +51,7 @@ export default {
       //console.log ('chg int \n', int);
       bus.$emit('showEditor', int);
 
-    },
-
-    share (i) {
-      let int = i;
-      //console.log ('share int \n', int);
-      this.$store.dispatch ('mutate', {
-        action: 'share',
-        id: int,
-        txt: ''
-      });
-    },
-
-    del (i) {
-      let int = i;
-      //console.log ('del int \n', int);
-      this.$store.dispatch ('mutate', {
-        action: 'del',
-        id: int,
-        txt: ''
-      });
-    },
+    }
   },
 
 };

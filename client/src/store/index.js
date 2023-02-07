@@ -14,9 +14,9 @@ import { filterJSN } from '@/mixins'
 export default new Vuex.Store({
 
   state: {
-	  words: [],
-	  user: '',
-	  loggedIn: false
+	  games: [],
+	  token: '',
+	  login: false
   },
 
   getters: {
@@ -29,85 +29,53 @@ export default new Vuex.Store({
   },
 
   mutations: {
-	  SET_WORDS (state, arg) {
-      	state.words = arg;},
+	SET_GAMES (state, arg) {
+      	state.games = arg;
+	},
+	SET_TOKEN (state, arg) {
+		state.token = arg;
+  	},
+	TOGGLE_LOGIN (state, arg) {
+		state.login = arg;
+  	},
   },
 
   actions: {
 
-	  loadNotes ({ commit, state }) {
+	loadGames ({ commit, state }) {
 
-      //getWords();
+		var config = {
+			method: 'get',
+			url: "https://reels.fly.dev/allGames",
+			headers: {
+				'Authorization': 'Bearer ' + state.token,
+				'Content-Type': 'application/json'
+			}
+			};
 
-      var query = JSON.stringify({
-    		query: `query POLISH { allPOLISH {
-    			data {
-    					form
-    					english
-    					polskie
-    					pronunciation
-    				}
-    			}
-    		}`
-    	});
-
-      var config = {
-    	  method: 'post',
-    	  url: "https://graphql.fauna.com/graphql",
-    	  headers: {
-    	    'Authorization': 'Bearer ' + "fnAEtOCvfNACSz_DtugvZK1JmIG4QFflwt5n3o_e",
-    	    'Content-Type': 'application/json'
-    	  },
-    	  data : query
-    	};
-
-      Vue.axios(config)
-        //.get('https://lingua.quest/polskie')
-        .then(r => r.data)
-			.then(d => {
-
-        let data = d.data;
-				console.log("server data", data.allPOLISH.data);
-
+		Vue.axios(config)
+			.then(r => {
+				console.log("allGames response: ", r.data)
+				let data = r.data.data;
 				if (data.length === 0) {
 					bus.$emit('serverResponse', 'You have no words in vocabulary yet');
-					commit('SET_WORDS', []);
-        }
-
+				}
 				//let list = filterJSN (data);
-				commit('SET_WORDS', data.allPOLISH.data);
+				commit('SET_GAMES', data);
+			}).catch(err => {
+			console.error (err);
+			bus.$emit('servereError!');
+		});
 
-		  }).catch(err => {
-          console.error ( err);
-          bus.$emit('serverResponse', d.message);
-      });
+	},
 
-    },
+	setToken ({ commit, state }, arg) {
+		commit('SET_TOKEN', arg);
+	},
 
-    addNote ({ commit, state, dispatch }, arg) {
-
-	  	let token = auth.getToken();
-	    console.log("token", token);
-
-      Vue.axios({
-
-  			method: 'post',
-  			url: 'https://test-bot.club/notes/add',
-  			headers: {'Authorization': 'Bearer ' + token},
-  			params: {
-  				email: state.user,
-  				text: arg,
-  			}
-  		})
-      .then(r => {
-
-			console.log("r add word\n", r);
-			bus.$emit('serverResponse', r.data.message);
-			if (r.data.message === 'Unauthorized') {
-  				bus.$emit('Unauthorized'); }
-  			else { dispatch('loadNotes');}
-  		}).catch(err => { console.error ( err); });
-    },
+	toggleLogin ({ commit, state }, arg) {
+		commit('TOGGLE_LOGIN', arg);
+	},
 
     fetchNote ({ commit, state }, arg) {
 

@@ -39,10 +39,10 @@ export default {
   },
 
   created () {
-		try {
+	try {
       fetchPhoto (this.imgID, this.images);
     }
-		catch(e) {
+	catch(e) {
       console.error ('created err:', e);
     }
    },

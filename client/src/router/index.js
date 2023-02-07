@@ -17,7 +17,7 @@ export default new Router({
     { path: '/login', component: Login },
     { path: '/dashboard', 
       component: Dash, 
-		  beforeEnter: requireAuth 
+		  //beforeEnter: requireAuth 
     },
     { path: '/logout',
         beforeEnter (to, from, next) {

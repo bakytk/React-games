@@ -2,9 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/"> Homepage </router-link>
-      <router-link to="/login" v-if="!loggedIn"> | Login </router-link>
-	    <router-link to="/register" v-if="!loggedIn"> | Register </router-link>  
-      <router-link to="/dashboard" v-if="loggedIn"> | Dashboard </router-link>
+      <router-link to="/login" v-if="!login"> | Login </router-link>
+	    <router-link to="/register" v-if="!login"> | Register </router-link>  
+      <router-link to="/dashboard" v-if="login"> | Dashboard </router-link>
     </div>
     <router-view/>
   </div>
@@ -14,8 +14,13 @@
 export default {
     data () {
       return {
-        loggedIn: this.$store.state.loggedIn
+        //
       }
+    },
+    computed: {
+  		login () {
+  			return this.$store.state.login
+  		},
     },
     created () {
       //

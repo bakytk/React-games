@@ -59,17 +59,20 @@ export default {
 	},
 
     methods: {
-      onSubmit() {
-		this.$axios.post('/login', {
-			username: this.form.username,
-			password: this.form.password
+		onSubmit() {
+			this.$axios.post('/login', {
+				username: this.form.username,
+				password: this.form.password
 		})
 		.then(resp => { 
 			this.alert.msg = resp.data.message;
 			this.alert.show = true;
-	        this.$store.state.user = this.form.username;
-	        this.$store.dispatch ('loadGames');
-	        this.$router.push('/dashboard');
+			if (resp.status === 200) {
+				let token = resp.data.access_token
+				this.$store.dispatch ('setToken', token);
+				this.$store.dispatch ('toggleLogin', true);
+				this.$router.push('/dashboard');
+			}
 		}); 
 	  }
     },

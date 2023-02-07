@@ -93,7 +93,10 @@ export default {
 			this.alert.msg = resp.data.message;
 			this.alert.show = true;
 			if (resp.status === 200) {
-				this.display = false
+				let token = resp.data.access_token
+				this.$store.dispatch ('setToken', token);
+				this.$store.dispatch ('toggleLogin', true);
+				this.$router.push('/dashboard');
 			}
 		}); 
       },

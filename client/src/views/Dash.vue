@@ -73,7 +73,7 @@ export default {
     },
     computed: {
   		user () {
-  			return this.$store.state.user
+  			return this.$store.state.login
   		},
     },
 
@@ -103,7 +103,6 @@ export default {
 		//const claims = auth.parseJwt(localStorage.idToken)
     	//console.jwt(window.localStorage.idToken)
     	//this.name = claims['name']
-
 	    bus.$on('serverResponse', (msg) => {
 	      this.alert.msg = msg;
 	      this.alert.show = true;
@@ -113,21 +112,8 @@ export default {
 	      this.logout()
 	    });
 
-	    bus.$on('showEditor', (int) => {
-	      this.edit_note_id = int;
-	      this.$refs['Editor'].show();
-	    });
 
-	    bus.$on('hideEditor', () => {
-	      this.$refs['Editor'].hide();
-	    });
-
-	    bus.$on('noteShared', (link) => {
-	      this.shared_note_link = link;
-	      this.$refs['Sharer'].show();
-	    });
-
-      this.$store.dispatch ('loadNotes');
+      	this.$store.dispatch ('loadGames');
 	}
 
 }
