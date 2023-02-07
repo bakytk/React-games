@@ -6,10 +6,11 @@
 
 1.  `/login`[POST]: sign-up, expecting `username` and `password` both mandatory
 1.  `/user` [POST]: `username`, `password`, `country` fields are mandatory, `firstName` and `lastName` nullable, but not undefined
-After `login` Bearer JWT-token will be issued, and required for endpoints:
-1.  `/games` [GET]: to fetch list of games in JSON format
+    After `login` Bearer JWT-token will be issued, and required for endpoints:
+1.  `/allGames` [GET]: to fetch list of games in JSON format
 1.  `/deposit` [POST]: insert "coin" into slot machine, default value: 20
-1.  `/spin` [POST]: spin the reels, returning reward, with following logic:
+1.  `/spin` [POST]: spin the reels, returning reward as described below
+1.  `/favoriteGames` [POST]: to get eliguble set of users as per instruction, a junction table `User_Game` is used with additonal boolean column `Favorite` to mark the preference relationship for a user-game pair
 
 ###### Instructions for reel machine reward
 
@@ -27,10 +28,11 @@ Rewards
 
 ###### Database
 
-1. using `migrations` would be a best approach, both for initiating and seeding database, but given custom files, setup with `sql-native` files would be a work in itself, so instead the following is implemented:
-1. `sequlize` is used to create (initiate) tables, schema is left as default `public`
-1. For seeding data with `games.json` and inserting custom users, `db/seed/index.ts` is used
-1. For deployment, `fly.io` service is used, as it has free support for `postgres` database
+1.  using `migrations` would be a best approach, both for initiating and seeding database, but given custom files, setup with `sql-native` files would be a work in itself, so instead the following is implemented:
+1.  `sequlize` is used to create (initiate) tables, schema is left as default `public`
+1.  For seeding data with `games.json` and inserting custom users, `db/seed/index.ts` is used
+1.  when the server is started, all necessary tables are generated with `sequelize`, then all you need to do is to make a post request to `/seedGames` with null body, but JWT-token is required
+1.  For deployment, `fly.io` service is used, as it has free support for `postgres` database
 
 Use the following commands to run and deploy:
 
@@ -50,13 +52,12 @@ fly launch
 
 To check the work of backend from POSTMAN, consult `postman` with json-file of a collection with requests
 
-
 #### Front-end
 
 The web app was built with Vue.js SPA
 
-1. On the front-end, `/login-register` are available to register and get JWT-token, and stored in-memory
-1. On the protected page, `/dashboard`, a user can:
+1.  On the front-end, `/login-register` are available to register and get JWT-token, and stored in-memory
+1.  On the protected page, `/dashboard`, a user can:
     1.  see a list of games from backend as per `games.json` file
     1.  With `deposit` button, a user can `20` coins to his balance
     1.  While `spin` button, wheels the reels on the backend, returing reward outcome & debiting balance by `1` coin
@@ -65,7 +66,7 @@ The web app was built with Vue.js SPA
 To deploy, `netlify` service was used as follows:
 
 ```
-cd client 
+cd client
 npm install
 
 # development
