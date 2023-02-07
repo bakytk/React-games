@@ -27,6 +27,7 @@ Rewards
 
 ###### Database
 
+1. using `migrations` would be a best approach, both for initiating and seeding database, but given custom files, setup with `sql-native` files would be a work in itself, so instead the following is implemented:
 1. `sequlize` is used to create (initiate) tables, schema is left as default `public`
 1. For seeding data with `games.json` and inserting custom users, `db/seed/index.ts` is used
 1. For deployment, `fly.io` service is used, as it has free support for `postgres` database
@@ -35,6 +36,7 @@ Use the following commands to run and deploy:
 
 ```
 cd server
+npm install
 
 # local development with docker-hosted postgres
 docker-compose run --build
@@ -47,6 +49,7 @@ fly launch
 ```
 
 To check the work of backend from POSTMAN, consult `postman` with json-file of a collection with requests
+
 
 #### Front-end
 
@@ -63,6 +66,7 @@ To deploy, `netlify` service was used as follows:
 
 ```
 cd client 
+npm install
 
 # development
 npm run serve
