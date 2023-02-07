@@ -16,7 +16,8 @@ export default new Vuex.Store({
   state: {
 	  games: [],
 	  token: '',
-	  login: false
+	  login: false,
+	  balance: 0
   },
 
   getters: {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
   	},
 	TOGGLE_LOGIN (state, arg) {
 		state.login = arg;
+  	},
+	SET_BALANCE (state, arg) {
+		state.balance = arg;
   	},
   },
 
@@ -71,6 +75,10 @@ export default new Vuex.Store({
 
 	setToken ({ commit, state }, arg) {
 		commit('SET_TOKEN', arg);
+	},
+
+	setBalance ({ commit, state }, arg) {
+		commit('SET_BALANCE', arg);
 	},
 
 	toggleLogin ({ commit, state }, arg) {

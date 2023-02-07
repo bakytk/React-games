@@ -14,8 +14,6 @@
 
 <script>
 
-import { bus } from '@/main'
-
 export default {
 
   data() {
@@ -46,13 +44,6 @@ export default {
   },
 
   methods: {
-
-    change (i) {
-      let int = i;
-      //console.log ('chg int \n', int);
-      bus.$emit('showEditor', int);
-
-    }
   },
 
 };

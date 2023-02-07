@@ -22,6 +22,10 @@ Vue.use(Vueaxios, axios);
 const axiosConfig = {
 	baseURL: 'https://reels.fly.dev',
 	timeout: 30000,
+  headers: {
+    'Authorization': 'Bearer ' + store.state.token,
+    'Content-Type': 'application/json'
+  }
 };
 Vue.prototype.$axios = axios.create(axiosConfig)
 

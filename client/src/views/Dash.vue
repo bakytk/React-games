@@ -10,31 +10,21 @@
 		</div>
 	</div>
 
-	<p>
-		<b-alert show variant="primary" v-if="alert.show"> {{ alert.msg }} </b-alert>
-	</p>
-
 	<div style="padding-top: 1%; padding-bottom: 4%;">
-		<b-form @submit.prevent="add">
-			<b-row>
-				<b-col cols="4">
-			  		<b-button type="submit" variant="info"
-			  			size="md"> Add new word </b-button>
-			  	</b-col>
-			    <b-col cols="6">
-			        <b-form-input class="form-input" v-model="add_note_text" type="text" />
-			    </b-col>
-			</b-row>
-		</b-form>
+		<b-row>
+			<b-col cols="4">
+			  	<b-button type="submit" variant="info"
+			  		size="md" @click="deposit"
+					> Deposit: 20 coins to slot machine 
+				</b-button>
+			</b-col>
+			<b-col cols="4">
+			  	<p> 
+					CURRENT PLYAER BALANCE: {{  balance }}
+				</p>
+			</b-col>
+		</b-row>
 	</div>
-
-	<b-modal ref="Editor" size="md" title="Enter text:" hide-footer>
-		<editor @exit="hideEditor" :int="edit_note_id"></editor>
-  	</b-modal>
-
-	<b-modal ref="Sharer" size="md" title="Read access via link:" hide-footer>
-		<sharer @exit="hideSharer" :link="shared_note_link"></sharer>
-  	</b-modal>
 
 	<template>
 	  	<dash></dash>
@@ -45,8 +35,7 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
-import { bus } from '@/main'
+import Vue from 'vue'
 import dash from '@/components/dash.vue'
 
 export default {
@@ -57,55 +46,43 @@ export default {
 
     data() {
       return {
-		add_note_text: '',
-		name: '',
-		edit_note_id: -1,
-		shared_note_link: '',
-		alert: { show: false, msg: ''},
       }
     },
     computed: {
   		user () {
   			return this.$store.state.login
   		},
+		balance () {
+  			return this.$store.state.balance
+  		},
     },
 
 	methods: {
 
-     add () {
-	    	this.$store.dispatch ('addNote', this.add_note_text);
-		    },
+		deposit() {
+			this.$axios.post('/deposit', { "coin": 20})
+			.then(resp => { 
+				if (resp.status === 200) {
+					let balance = resp.data.data.balance;
+					console.log("balance", balance);
+					this.$store.dispatch ('setBalance', balance);
+				} else {
+					console.log("deposit non-200 response:", resp)
+				}
+			}).catch(e => {
+				console.log("deposit error:", e);
+			})
+	},
 
-		 logout () {
+	logout () {
   			this.$store.state.user='';
   			this.$router.push('/login');
   			window.localStorage.removeItem('reels-app');
 		},
 
-		hideEditor () {
-	    	this.$refs['Editor'].hide();
-		},
-
-		hideSharer () {
-	    	this.$refs['Sharer'].hide();
-		},
 	},
 
 	mounted () {
-
-		//const claims = auth.parseJwt(localStorage.idToken)
-    	//console.jwt(window.localStorage.idToken)
-    	//this.name = claims['name']
-	    bus.$on('serverResponse', (msg) => {
-	      this.alert.msg = msg;
-	      this.alert.show = true;
-	    });
-
-	    bus.$on('Unauthorized', () => {
-	      this.logout()
-	    });
-
-
       	this.$store.dispatch ('loadGames');
 	}
 
